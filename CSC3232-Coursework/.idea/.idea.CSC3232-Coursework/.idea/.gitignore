@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/projectSettingsUpdater.xml
+/contentModel.xml
+/.idea.CSC3232-Coursework.iml
+# Datasource local storage ignored files
+/../../../../../../../../../../../:\Users\manta\OneDrive\Documents\GitHub\CSC3232-Coursework\CSC3232-Coursework\.idea\.idea.CSC3232-Coursework\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
