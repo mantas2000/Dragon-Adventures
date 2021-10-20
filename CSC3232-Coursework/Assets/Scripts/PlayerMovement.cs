@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpForce = 400f;
+    [SerializeField] private float jumpForce = 600f;
     private Rigidbody2D _body;
     private SpriteRenderer _renderer;
     private Animator _animator;
@@ -23,16 +23,9 @@ public class PlayerMovement : MonoBehaviour
     {
         var horizontalInput = Input.GetAxis("Horizontal");
         
-        // Player flipping
-        if (horizontalInput > 0)
-        {
-            _renderer.flipX = false;
-        }
-        else if (horizontalInput < 0)
-        {
-            _renderer.flipX = true;
-        }
-        
+        // Flip player
+        Flip(horizontalInput);
+
         // Horizontal movement
         _body.velocity = new Vector2(horizontalInput * speed, _body.velocity.y);
 
@@ -55,5 +48,18 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground")) _grounded = true;
+    }
+
+    // Flip player to match movement direction
+    private void Flip(float movementDirection)
+    {
+        if (movementDirection > 0)
+        {
+            _renderer.flipX = false;
+        }
+        else if (movementDirection < 0)
+        {
+            _renderer.flipX = true;
+        }
     }
 }
