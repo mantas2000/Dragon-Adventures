@@ -1,12 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 600f;
+    [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
+    private Vector2 _refVelocity = Vector2.zero;
     private Rigidbody2D _body;
     private SpriteRenderer _renderer;
     private Animator _animator;
@@ -21,13 +21,15 @@ public class PlayerMovement : MonoBehaviour
     
     private void FixedUpdate()
     {
+        // Get user input
         var horizontalInput = Input.GetAxis("Horizontal");
         
         // Flip player
         Flip(horizontalInput);
 
         // Horizontal movement
-        _body.velocity = new Vector2(horizontalInput * speed, _body.velocity.y);
+        var targetVelocity = new Vector2(horizontalInput * speed, _body.velocity.y);
+        _body.velocity = Vector2.SmoothDamp(_body.velocity, targetVelocity, ref _refVelocity, movementSmoothing);
 
         // Vertical movement
         if (Input.GetKey(KeyCode.Space) && _grounded) Jump();
