@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 15f;
+    [SerializeField] private float fallForce = 100f;
     [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
     private Vector2 _refVelocity = Vector2.zero;
     private Rigidbody2D _body;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Get user input
         var horizontalInput = Input.GetAxis("Horizontal");
+        var verticalInput = Input.GetAxis("Vertical");
         
         // Flip player
         Flip(horizontalInput);
@@ -32,7 +34,12 @@ public class PlayerMovement : MonoBehaviour
         _body.velocity = Vector2.SmoothDamp(_body.velocity, targetVelocity, ref _refVelocity, movementSmoothing);
 
         // Vertical movement
-        if (Input.GetKey(KeyCode.Space) && _grounded) Jump();
+        if (verticalInput > 0 && _grounded) Jump();
+        
+        else if (verticalInput < 0 && !_grounded)
+        {
+            _body.velocity = new Vector2(_body.velocity.x, verticalInput * fallForce);
+        }
         
         // Teleport player
         Teleport();
