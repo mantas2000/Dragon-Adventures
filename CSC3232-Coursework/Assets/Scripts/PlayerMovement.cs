@@ -4,7 +4,7 @@ using Vector2 = UnityEngine.Vector2;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpForce = 600f;
+    [SerializeField] private float jumpForce = 15f;
     [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
     private Vector2 _refVelocity = Vector2.zero;
     private Rigidbody2D _body;
@@ -33,6 +33,12 @@ public class PlayerMovement : MonoBehaviour
 
         // Vertical movement
         if (Input.GetKey(KeyCode.Space) && _grounded) Jump();
+        
+        // Teleport player
+        Teleport();
+        
+        // Let player jump over bridges
+        Physics2D.IgnoreLayerCollision(6, 8, _body.velocity.y > 0.0f);  
 
         // Set Animator parameters
         //_animator.SetBool("Walk", horizontalInput != 0);
@@ -43,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         _grounded = false;
-        _body.AddForce(new Vector2(0f, jumpForce));
+        _body.velocity = new Vector2(_body.velocity.x, jumpForce);
         //_animator.SetTrigger("Jump");
     }
 
@@ -62,6 +68,22 @@ public class PlayerMovement : MonoBehaviour
         else if (movementDirection < 0)
         {
             _renderer.flipX = true;
+        }
+    }
+
+    private void Teleport()
+    {
+        if (transform.position.x > 16.6f)
+        {
+            transform.position = new Vector3(-16.6f, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x < -16.6f)
+        {
+            transform.position = new Vector3(16.6f, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.y < -4f)
+        {
+            transform.position = new Vector3(transform.position.x, 8.65f, transform.position.z);
         }
     }
 }
