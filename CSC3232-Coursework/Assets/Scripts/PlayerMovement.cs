@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Vector2 = UnityEngine.Vector2;
 
 public class PlayerMovement : MonoBehaviour
@@ -19,7 +20,15 @@ public class PlayerMovement : MonoBehaviour
         _renderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
     }
-    
+
+    private void Update()
+    {
+        // Restart level
+        if (Input.GetKeyDown(KeyCode.R)){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
     private void FixedUpdate()
     {
         // Get user input
