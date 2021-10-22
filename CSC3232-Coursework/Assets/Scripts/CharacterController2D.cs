@@ -38,7 +38,7 @@ public class CharacterController2D : MonoBehaviour
         Teleport();
     }
     
-    public void Move(float move, bool jump, bool crouch)
+    public void Move(float move, bool jump, bool crouch, bool hitMove)
     {
         // Horizontal movement
         if (!crouch)
@@ -47,6 +47,12 @@ public class CharacterController2D : MonoBehaviour
             if (!_grounded)
             {
                 move *= 2;
+            }
+            
+            // Check if hit move is available
+            if (_grounded && hitMove)
+            {
+                move *= 60;
             }
             
             var targetVelocity = new Vector2(move * 10f, _body.velocity.y);
@@ -69,6 +75,7 @@ public class CharacterController2D : MonoBehaviour
         {
             case true when crouch:
                 // Do nothing for now
+                Debug.Log("Not implemented");
                 break;
             
             case false when crouch:
