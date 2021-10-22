@@ -12,7 +12,14 @@ public class PlayerMovement : MonoBehaviour
     private bool _crouchMove;
     private float _lastLeftTapTime;
     private float _lastRightTapTime;
-    private float _holdTime; 
+    private float _holdTime;
+
+    private void Start()
+    {
+        _lastLeftTapTime = -Time.time;
+        _lastRightTapTime = -Time.time;
+        _holdTime = 0;
+    }
 
     private void Update()
     {
