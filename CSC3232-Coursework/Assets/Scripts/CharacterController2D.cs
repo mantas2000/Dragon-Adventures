@@ -38,7 +38,7 @@ public class CharacterController2D : MonoBehaviour
         Teleport();
     }
     
-    public void Move(float move, bool jump, bool crouch, bool hitMove)
+    public void Move(float move, bool jump, bool crouch, bool hitMove, bool crouchMove)
     {
         // Horizontal movement
         if (!crouch)
@@ -49,39 +49,47 @@ public class CharacterController2D : MonoBehaviour
                 case false:
                     move *= 2;
                     break;
+                
                 // Check if hit move is available
                 case true when hitMove:
                     move *= 60;
                     break;
             }
-
+            
+            // Move player
             var targetVelocity = new Vector2(move * 10f, _body.velocity.y);
             _body.velocity = Vector2.SmoothDamp(_body.velocity, targetVelocity, ref _refVelocity, movementSmoothing);
             
             // Flip player
             Flip(move);
         }
-
-        // Jumping logic
-        if (_grounded && jump)
+        
+        // Disable horizontal movement while crouching
+        else
         {
-            // Add a vertical force to the player
-            _grounded = false;
-            _body.AddForce(new Vector2(0f, jumpForce));
+            _body.velocity = new Vector2(0f, _body.velocity.y);
         }
 
-        // Crouching logic
         switch (_grounded)
         {
-            case true when crouch:
-                // Do nothing for now
+            case true when jump:
+                // Add a vertical force to the player
+                _grounded = false;
+                _body.AddForce(new Vector2(0f, jumpForce));
+                break;
+            
+            case true when crouchMove:
+                // Add a special vertical force to the player
+                _grounded = false;
+                _body.AddForce(new Vector2(0f, (float) (jumpForce * 1.5)));
                 break;
             
             case false when crouch:
+                // Attack from air
                 _body.AddForce(new Vector2(0f, -jumpForce));
                 break;
         }
-        
+
         // Let player jump over bridges
         Physics2D.IgnoreLayerCollision(6, 8, _body.velocity.y > 0.0f);  
     }
