@@ -3,7 +3,7 @@ using UnityEngine;
 public class CharacterController2D : MonoBehaviour
 {
     [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
-    [SerializeField] private float jumpForce = 800f;
+    [SerializeField] private float jumpForce = 600f;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Transform groundCheck;
 
@@ -43,18 +43,18 @@ public class CharacterController2D : MonoBehaviour
         // Horizontal movement
         if (!crouch)
         {
-            // Increase movement speed while mid air
-            if (!_grounded)
+            switch (_grounded)
             {
-                move *= 2;
+                // Increase movement speed while mid air
+                case false:
+                    move *= 2;
+                    break;
+                // Check if hit move is available
+                case true when hitMove:
+                    move *= 60;
+                    break;
             }
-            
-            // Check if hit move is available
-            if (_grounded && hitMove)
-            {
-                move *= 60;
-            }
-            
+
             var targetVelocity = new Vector2(move * 10f, _body.velocity.y);
             _body.velocity = Vector2.SmoothDamp(_body.velocity, targetVelocity, ref _refVelocity, movementSmoothing);
             
@@ -75,7 +75,6 @@ public class CharacterController2D : MonoBehaviour
         {
             case true when crouch:
                 // Do nothing for now
-                Debug.Log("Not implemented");
                 break;
             
             case false when crouch:
