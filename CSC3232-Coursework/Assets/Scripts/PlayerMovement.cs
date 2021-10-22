@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Crouch")) _crouch = true;
         
         else if (Input.GetButtonUp("Crouch")) _crouch = false;
+        
+        // Restart level
+        if (Input.GetKeyDown(KeyCode.R)){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     private void FixedUpdate()
