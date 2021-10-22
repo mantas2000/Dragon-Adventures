@@ -3,25 +3,53 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float walkSpeed = 12f;
+    [SerializeField] private float walkSpeed = 15f;
     public CharacterController2D controller;
     private float _horizontalMove;
     private bool _jump;
     private bool _crouch;
     private bool _hitMove;
+    private bool _crouchMove;
     private float _lastLeftTapTime;
     private float _lastRightTapTime;
+    private float _holdTime; 
 
     private void Update()
     {
+        // Horizontal movement input
         _horizontalMove = Input.GetAxisRaw("Horizontal") * walkSpeed;
 
+        // Check space bar input
         if (Input.GetKeyDown(KeyCode.Space)) _jump = true;
+        
+        // Check if crouch is selected
+        if (Input.GetKeyDown(KeyCode.DownArrow)) _crouch = true;
 
-        if (Input.GetButtonDown("Crouch")) _crouch = true;
+        // Track for how long crouch is pressed down
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            _holdTime += Time.deltaTime;
+
+            // Activate crouching special move
+            if (_holdTime > 2 && _jump)
+            {
+                _crouchMove = true;
+                _crouch = false;
+                _holdTime = 0;
+            }
+            
+            // Disable jumping
+            _jump = false;
+        }
         
-        else if (Input.GetButtonUp("Crouch")) _crouch = false;
-        
+        // Crouching was cancelled
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            _crouch = false;
+            _crouchMove = false;
+            _holdTime = 0;
+        }
+
         // Restart level
         if (Input.GetKeyDown(KeyCode.R)){
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -44,8 +72,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        controller.Move(_horizontalMove * Time.fixedDeltaTime, _jump, _crouch, _hitMove);
+        controller.Move(_horizontalMove * Time.fixedDeltaTime, _jump, _crouch, _hitMove, _crouchMove);
         _jump = false;
         _hitMove = false;
+        _crouchMove = false;
     }
 }
