@@ -408,6 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSmoothing: 0.05
   jumpForce: 600
+  wallJumpForce: 1900
   wallSlideSpeed: 1.25
   whatIsGround:
     serializedVersion: 2
@@ -1502,7 +1503,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967917615}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0702, y: -0.0191, z: 0}
+  m_LocalPosition: {x: -0.0904, y: -0.0191, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 326373958}
