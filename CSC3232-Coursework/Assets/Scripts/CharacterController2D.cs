@@ -5,6 +5,7 @@ public class CharacterController2D : MonoBehaviour
 {
     [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
     [SerializeField] private float jumpForce = 600f;
+    [SerializeField] private float wallJumpForce = 1900f;
     [SerializeField] private float wallSlideSpeed = 1.25f;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsWall;
@@ -101,12 +102,12 @@ public class CharacterController2D : MonoBehaviour
             
             // Jump from left wall
             case false when _onLeftWall && jump:
-                _body.AddForce(new Vector2(2500f, 6000f));
+                _body.AddForce(new Vector2(wallJumpForce, wallJumpForce * 3));
                 break;
             
             // Jump from right wall
             case false when _onRightWall && jump:
-                _body.AddForce(new Vector2(-2500f, 6000f));
+                _body.AddForce(new Vector2(-wallJumpForce, wallJumpForce * 3));
                 break;
         }
 
