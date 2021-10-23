@@ -1,17 +1,24 @@
+using System.Linq;
 using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
     [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
     [SerializeField] private float jumpForce = 600f;
+    [SerializeField] private float wallSlideSpeed = 1.25f;
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private LayerMask whatIsWall;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform leftWallCheck;
+    [SerializeField] private Transform rightWallCheck;
 
     private const float GroundedRadius = .2f;
     private Vector2 _refVelocity = Vector2.zero;
     private Rigidbody2D _body;
     private SpriteRenderer _renderer;
     private bool _grounded;
+    private bool _onLeftWall;
+    private bool _onRightWall;
 
     private void Awake()
     {
@@ -21,19 +28,10 @@ public class CharacterController2D : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _grounded = false;
-        
-        // Check if player is grounded
-        var colliders = Physics2D.OverlapCircleAll(groundCheck.position, GroundedRadius, whatIsGround);
-        
-        foreach (var t in colliders)
-        {
-            if (t.gameObject != gameObject)
-            {
-                _grounded = true;
-            }
-        }
-        
+        // Check collisions
+        GroundCheck();
+        WallCheck();
+
         // Teleport player if it enters out of bounds
         Teleport();
     }
@@ -72,21 +70,43 @@ public class CharacterController2D : MonoBehaviour
 
         switch (_grounded)
         {
-            case true when jump:
-                // Add a vertical force to the player
+            // Add a vertical force to the player
+            case true when jump && !_onLeftWall && !_onRightWall:
                 _grounded = false;
                 _body.AddForce(new Vector2(0f, jumpForce));
                 break;
             
+            // Add a special vertical force to the player
             case true when crouchMove:
-                // Add a special vertical force to the player
                 _grounded = false;
                 _body.AddForce(new Vector2(0f, (float) (jumpForce * 1.5)));
                 break;
             
+            // Attack from air
             case false when crouch:
-                // Attack from air
                 _body.AddForce(new Vector2(0f, -jumpForce));
+                break;
+            
+            // Slide from left wall
+            case false when _onLeftWall && !jump:
+                _renderer.flipX = false;
+                _body.velocity = new Vector2(_body.velocity.x, -wallSlideSpeed);
+                break;
+            
+            // Slide from right wall
+            case false when _onRightWall && !jump:
+                _renderer.flipX = true;
+                _body.velocity = new Vector2(_body.velocity.x, -wallSlideSpeed);
+                break;
+            
+            // Jump from left wall
+            case false when _onLeftWall && jump:
+                _body.AddForce(new Vector2(2500f, 6000f));
+                break;
+            
+            // Jump from right wall
+            case false when _onRightWall && jump:
+                _body.AddForce(new Vector2(-2500f, 6000f));
                 break;
         }
 
@@ -122,5 +142,26 @@ public class CharacterController2D : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 8.65f, transform.position.z);
         }
+    }
+    
+    private void GroundCheck()
+    {
+        // Check if player is grounded
+        var groundColliders = Physics2D.OverlapCircleAll(groundCheck.position, GroundedRadius, whatIsGround);
+        
+        _grounded = groundColliders.Any(t => t.gameObject != gameObject);
+    }
+
+    private void WallCheck()
+    {
+        // Check if player is touching walls
+        var leftWallColliders = Physics2D.OverlapCircleAll(leftWallCheck.position, GroundedRadius, whatIsWall);
+        var rightWallColliders = Physics2D.OverlapCircleAll(rightWallCheck.position, GroundedRadius, whatIsWall);
+        
+        _onLeftWall = leftWallColliders.Any(t => t.gameObject != gameObject);
+
+        if (_onLeftWall) return;
+        
+        _onRightWall = rightWallColliders.Any(t => t.gameObject != gameObject);
     }
 }
