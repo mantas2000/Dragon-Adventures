@@ -67,11 +67,11 @@ public class CharacterController2D : MonoBehaviour
                     move *= 60;
                     break;
                 
-                case true when Mathf.Abs(move) > 0.01f && _body.velocity.y < 0.01f:
+                case true when Mathf.Abs(move) > 0.01f && Mathf.Abs(_body.velocity.y) < 0.01f:
                     ChangeAnimationState(PLAYER_RUN);
                     break;
                 
-                case true when _body.velocity.x < 0.01f && _body.velocity.y < 0.01f:
+                case true when Mathf.Abs(_body.velocity.x) < 0.01f && Mathf.Abs(_body.velocity.y) < 0.01f:
                     ChangeAnimationState(PLAYER_IDLE);
                     break;
             }

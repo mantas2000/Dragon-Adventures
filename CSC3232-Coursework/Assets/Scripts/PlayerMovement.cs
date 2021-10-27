@@ -72,16 +72,24 @@ public class PlayerMovement : MonoBehaviour
         
         // Monitor left arrow clicks for hit move activation
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
-            if (Time.time - _lastLeftTapTime < 0.25f) _hitMove = true;
+            if (Time.time - _lastLeftTapTime < 0.25f)
+            {
+                _hitMove = true;
+                _animator.Play("Player_Roll");
+            }
 
             _lastLeftTapTime = Time.time;
         }
         
         // Monitor right arrow clicks for hit move activation
         if (Input.GetKeyDown(KeyCode.RightArrow)){
-            if (Time.time - _lastRightTapTime < 0.25f) _hitMove = true;
+            if (Time.time - _lastRightTapTime < 0.25f)
+            {
+                _hitMove = true;
+                _animator.Play("Player_Roll");
+            }
 
-                _lastRightTapTime = Time.time;
+            _lastRightTapTime = Time.time;
         }
     }
 
