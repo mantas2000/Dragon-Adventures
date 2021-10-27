@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float walkSpeed = 15f;
     public CharacterController2D controller;
+    private Animator _animator;
     private float _horizontalMove;
     private bool _jump;
     private bool _crouch;
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        _animator = GetComponent<Animator>();
         _lastLeftTapTime = -Time.time;
         _lastRightTapTime = -Time.time;
         _holdTime = 0;
@@ -37,12 +39,18 @@ public class PlayerMovement : MonoBehaviour
         {
             _holdTime += Time.deltaTime;
 
-            // Activate crouching special move
-            if (_holdTime > 2 && _jump)
+            // Check if crouching special move is available
+            if (_holdTime > 1.5f)
             {
-                _crouchMove = true;
-                _crouch = false;
-                _holdTime = 0;
+                _animator.Play("Player_Crouch_Move");
+                
+                // Activate crouching special move
+                if (_jump)
+                {
+                    _crouchMove = true;
+                    _crouch = false;
+                    _holdTime = 0;
+                }
             }
             
             // Disable jumping
