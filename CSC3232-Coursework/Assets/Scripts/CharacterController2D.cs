@@ -13,18 +13,31 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform leftWallCheck;
     [SerializeField] private Transform rightWallCheck;
 
-    private const float GroundedRadius = .2f;
-    private Vector2 _refVelocity = Vector2.zero;
     private Rigidbody2D _body;
     private SpriteRenderer _renderer;
+    private Animator _animator;
+    private Vector2 _refVelocity = Vector2.zero;
+    private const float GroundedRadius = .2f;
     private bool _grounded;
     private bool _onLeftWall;
     private bool _onRightWall;
+    private bool _wallJump;
+    private float _lastTimeOnWall;
+    private string _currentState;
+    
+    // Animation states
+    private const string PLAYER_IDLE = "Player_Idle";
+    private const string PLAYER_RUN = "Player_Run";
+    private const string PLAYER_JUMP = "Player_Jump";
+    private const string PLAYER_CROUCH = "Player_Crouch";
+    private const string PLAYER_ROLL = "Player_Roll";
+    private const string PLAYER_SLIDE = "Player_Slide";
 
     private void Awake()
     {
         _body = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -53,6 +66,14 @@ public class CharacterController2D : MonoBehaviour
                 case true when hitMove:
                     move *= 60;
                     break;
+                
+                case true when Mathf.Abs(move) > 0.01f && _body.velocity.y < 0.01f:
+                    ChangeAnimationState(PLAYER_RUN);
+                    break;
+                
+                case true when _body.velocity.x < 0.01f && _body.velocity.y < 0.01f:
+                    ChangeAnimationState(PLAYER_IDLE);
+                    break;
             }
             
             // Move player
@@ -67,6 +88,13 @@ public class CharacterController2D : MonoBehaviour
         else
         {
             _body.velocity = new Vector2(0f, _body.velocity.y);
+            ChangeAnimationState(PLAYER_CROUCH);
+        }
+        
+        // Check if player is wall jumping
+        if (_wallJump && (_grounded || Time.time - _lastTimeOnWall > 1f))
+        {
+            _wallJump = false;
         }
 
         switch (_grounded)
@@ -75,12 +103,14 @@ public class CharacterController2D : MonoBehaviour
             case true when jump && !_onLeftWall && !_onRightWall:
                 _grounded = false;
                 _body.AddForce(new Vector2(0f, jumpForce));
+                ChangeAnimationState(PLAYER_JUMP);
                 break;
             
             // Add a special vertical force to the player
             case true when crouchMove:
                 _grounded = false;
                 _body.AddForce(new Vector2(0f, (float) (jumpForce * 1.5)));
+                ChangeAnimationState(PLAYER_ROLL);
                 break;
             
             // Attack from air
@@ -92,22 +122,30 @@ public class CharacterController2D : MonoBehaviour
             case false when _onLeftWall && !jump:
                 _renderer.flipX = false;
                 _body.velocity = new Vector2(_body.velocity.x, -wallSlideSpeed);
+                if (!_wallJump) ChangeAnimationState(move > 0.01f ? PLAYER_IDLE : PLAYER_SLIDE);
                 break;
             
             // Slide from right wall
             case false when _onRightWall && !jump:
                 _renderer.flipX = true;
                 _body.velocity = new Vector2(_body.velocity.x, -wallSlideSpeed);
+                if (!_wallJump) ChangeAnimationState(move < -0.01f ? PLAYER_IDLE : PLAYER_SLIDE);
                 break;
             
             // Jump from left wall
             case false when _onLeftWall && jump:
                 _body.AddForce(new Vector2(wallJumpForce, wallJumpForce * 3));
+                ChangeAnimationState(PLAYER_ROLL);
+                _wallJump = true;
+                _lastTimeOnWall = Time.time;
                 break;
             
             // Jump from right wall
             case false when _onRightWall && jump:
                 _body.AddForce(new Vector2(-wallJumpForce, wallJumpForce * 3));
+                ChangeAnimationState(PLAYER_ROLL);
+                _wallJump = true;
+                _lastTimeOnWall = Time.time;
                 break;
         }
 
@@ -164,5 +202,14 @@ public class CharacterController2D : MonoBehaviour
         if (_onLeftWall) return;
         
         _onRightWall = rightWallColliders.Any(t => t.gameObject != gameObject);
+    }
+
+    private void ChangeAnimationState(string newState)
+    {
+        if (_currentState == newState) return;
+        
+        _animator.Play(newState);
+
+        _currentState = newState;
     }
 }
