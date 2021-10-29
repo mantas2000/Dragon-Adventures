@@ -245,4 +245,10 @@ public class CharacterController2D : MonoBehaviour
         yield return new WaitForEndOfFrame();
         _isColliding = false;
     }
+
+    // Check if player collected all available gems
+    public bool AllGemsCollected()
+    {
+        return _gemsCollected == _totalGems;
+    }
 }
