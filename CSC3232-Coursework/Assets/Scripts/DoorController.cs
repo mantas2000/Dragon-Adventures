@@ -15,4 +15,13 @@ public class DoorController : MonoBehaviour
         _allGemsCollected = controller2D.AllGemsCollected();
         _animator.SetBool("AllGemsCollected", _allGemsCollected);
     }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Collision with player
+        if (other.gameObject.CompareTag("Player") && _allGemsCollected)
+        {
+            // Application.LoadLevel("");
+        }
+    }
 }
