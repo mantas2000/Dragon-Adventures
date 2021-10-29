@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform leftWallCheck;
     [SerializeField] private Transform rightWallCheck;
+    [SerializeField] private ScoreSystem scoreSystem;
 
     private Rigidbody2D _body;
     private SpriteRenderer _renderer;
@@ -24,6 +26,9 @@ public class CharacterController2D : MonoBehaviour
     private bool _wallJump;
     private float _lastTimeOnWall;
     private string _currentState;
+    private bool _isColliding;
+    private int _gemsCollected;
+    private int _totalGems;
     
     // Animation states
     private const string PLAYER_IDLE = "Player_Idle";
@@ -38,6 +43,8 @@ public class CharacterController2D : MonoBehaviour
         _body = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        _totalGems = GameObject.FindGameObjectsWithTag("Gem").Length;
+        scoreSystem.DrawGems(_gemsCollected, _totalGems);
     }
 
     private void FixedUpdate()
@@ -211,5 +218,31 @@ public class CharacterController2D : MonoBehaviour
         _animator.Play(newState);
 
         _currentState = newState;
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (_isColliding) return;
+        _isColliding = true;
+        
+        // Collision with gems
+        if (other.gameObject.CompareTag("Gem"))
+        {
+            other.gameObject.SetActive(false);
+            _gemsCollected += 1;
+            
+            // Update scoreboard
+            scoreSystem.DrawGems(_gemsCollected, _totalGems);
+        }
+        
+        // Reset collision trigger
+        StartCoroutine(CollisionReset());
+    }
+
+    // Reset collision trigger
+    private IEnumerator CollisionReset()
+    {
+        yield return new WaitForEndOfFrame();
+        _isColliding = false;
     }
 }
