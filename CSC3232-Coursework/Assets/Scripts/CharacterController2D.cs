@@ -176,13 +176,13 @@ public class CharacterController2D : MonoBehaviour
     // Teleport player back when it goes out of bounds
     private void Teleport()
     {
-        if (transform.position.x > 16.6f)
+        if (transform.position.x > 14.5f)
         {
-            transform.position = new Vector3(-16.6f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-14.5f, transform.position.y, transform.position.z);
         }
-        else if (transform.position.x < -16.6f)
+        else if (transform.position.x < -14.5f)
         {
-            transform.position = new Vector3(16.6f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(14.5f, transform.position.y, transform.position.z);
         }
         else if (transform.position.y < -4f)
         {

@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
             _holdTime += Time.deltaTime;
 
             // Check if crouching special move is available
-            if (_holdTime > 1.5f)
+            if (_holdTime > 1f)
             {
                 _animator.Play("Player_Crouch_Move");
                 
