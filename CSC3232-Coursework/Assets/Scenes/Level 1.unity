@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a602bfbf7bdcc6c43b26f1a8a6ce1f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller2D: {fileID: 326373962}
+  controller: {fileID: 326373964}
 --- !u!95 &109366041
 Animator:
   serializedVersion: 3
@@ -520,6 +520,7 @@ GameObject:
   - component: {fileID: 326373959}
   - component: {fileID: 326373962}
   - component: {fileID: 326373956}
+  - component: {fileID: 326373964}
   - component: {fileID: 326373963}
   m_Layer: 6
   m_Name: Player
@@ -699,7 +700,6 @@ MonoBehaviour:
   groundCheck: {fileID: 516063839}
   leftWallCheck: {fileID: 967917616}
   rightWallCheck: {fileID: 1188709598}
-  scoreSystem: {fileID: 1389855798}
 --- !u!95 &326373963
 Animator:
   serializedVersion: 3
@@ -719,6 +719,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &326373964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326373955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9a85f90d83f7d544a6567ee8cea1bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreSystem: {fileID: 1389855798}
 --- !u!1 &397077499
 GameObject:
   m_ObjectHideFlags: 0

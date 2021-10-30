@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    [SerializeField] private CharacterController2D controller2D;
+    [SerializeField] private GemCollecting controller;
     private Animator _animator;
     private bool _allGemsCollected;
     private void Awake()
@@ -12,7 +12,7 @@ public class DoorController : MonoBehaviour
 
     private void Update()
     {
-        _allGemsCollected = controller2D.AllGemsCollected();
+        _allGemsCollected = controller.AllGemsCollected();
         _animator.SetBool("AllGemsCollected", _allGemsCollected);
     }
     
