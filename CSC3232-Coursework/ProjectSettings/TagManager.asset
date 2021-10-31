@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Gem
   - Door
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -19,8 +20,8 @@ TagManager:
   - Bridge
   - Wall
   - Door
-  - 
-  - 
+  - Decoration
+  - Obstacle
   - 
   - 
   - 
@@ -55,4 +56,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2510934157
+    locked: 0
+  - name: Obstacle
+    uniqueID: 3393629497
     locked: 0
