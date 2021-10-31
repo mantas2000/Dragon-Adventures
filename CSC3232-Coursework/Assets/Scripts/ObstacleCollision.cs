@@ -5,7 +5,7 @@ public class ObstacleCollision : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Collision with player
+        // Collision with obstacle
         if (other.gameObject.CompareTag("Obstacle"))
         {
             // Restart level

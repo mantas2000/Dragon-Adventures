@@ -8,6 +8,7 @@ TagManager:
   - Gem
   - Door
   - Obstacle
+  - Destructible
   layers:
   - Default
   - TransparentFX

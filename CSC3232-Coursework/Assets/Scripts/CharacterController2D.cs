@@ -24,6 +24,7 @@ public class CharacterController2D : MonoBehaviour
     private bool _wallJump;
     private float _lastTimeOnWall;
     private string _currentState;
+    private bool _airAttack;
 
     // Animation states
     private const string PLAYER_IDLE = "Player_Idle";
@@ -115,6 +116,7 @@ public class CharacterController2D : MonoBehaviour
             
             // Attack from air
             case false when crouch:
+                _airAttack = true;
                 _body.AddForce(new Vector2(0f, -jumpForce));
                 break;
             
@@ -150,7 +152,10 @@ public class CharacterController2D : MonoBehaviour
         }
 
         // Let player jump over bridges
-        Physics2D.IgnoreLayerCollision(6, 8, _body.velocity.y > 0.0f);  
+        Physics2D.IgnoreLayerCollision(6, 8, _body.velocity.y > 0.0f);
+        
+        // Disable air attack if player is on the ground
+        if (_grounded) _airAttack = false;
     }
     
     // Flip player to match movement direction
@@ -211,5 +216,10 @@ public class CharacterController2D : MonoBehaviour
         _animator.Play(newState);
 
         _currentState = newState;
+    }
+
+    public bool AirAttack()
+    {
+        return _airAttack;
     }
 }
