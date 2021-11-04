@@ -16,7 +16,7 @@ public class Patrol : PassiveMS
         base.UpdateLogic();
         
         // Go to Idle state, if player reached one of the wayponts
-        if (Vector2.Distance(_sm.rigidbody2D.position, _sm.waypoints[_currentWaypoint].position) < 1f)
+        if (Vector2.Distance(_sm.enemy.position, _sm.waypoints[_currentWaypoint].position) < 1f)
         {
             StateMachine.ChangeState(_sm.IdleState);
         }
@@ -26,9 +26,10 @@ public class Patrol : PassiveMS
     {
         base.UpdatePhysics();
         
-        _sm.renderer.flipX = _sm.rigidbody2D.position.x < _sm.waypoints[_currentWaypoint].position.x;
+        // Flip enemy
+        _sm.renderer.flipX = _sm.enemy.position.x < _sm.waypoints[_currentWaypoint].position.x;
         
         // Move towards next waypoint
-        _sm.rigidbody2D.position = Vector2.MoveTowards(_sm.rigidbody2D.position, _sm.waypoints[_currentWaypoint].position, _sm.moveSpeed * Time.deltaTime);
+        _sm.enemy.position = Vector2.MoveTowards(_sm.enemy.position, _sm.waypoints[_currentWaypoint].position, _sm.moveSpeed * Time.deltaTime);
     }
 }

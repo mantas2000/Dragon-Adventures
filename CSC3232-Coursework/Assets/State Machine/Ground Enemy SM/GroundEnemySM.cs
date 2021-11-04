@@ -7,7 +7,7 @@ public class GroundEnemySM : StateMachine
     [HideInInspector] public GetInRange GetInRangeState;
     [HideInInspector] public Shoot ShootState;
 
-    public new Rigidbody2D rigidbody2D;
+    public Rigidbody2D enemy;
     public new SpriteRenderer renderer;
     public Transform[] waypoints;
     public Transform castPoint;

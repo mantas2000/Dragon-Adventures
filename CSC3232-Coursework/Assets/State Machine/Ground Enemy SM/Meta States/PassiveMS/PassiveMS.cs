@@ -13,6 +13,7 @@ public class PassiveMS : BaseState
     {
         base.UpdateLogic();
         
+        // Calculate linecast end coordinates
         var endPos = _sm.renderer.flipX switch
         {
             true => _sm.castPoint.position + Vector3.right * _sm.visionDistance,

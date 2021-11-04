@@ -2986,7 +2986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02dd76c8d1baba846b1dcb0fbb66e8b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody2D: {fileID: 1821206335}
+  enemy: {fileID: 1821206335}
   renderer: {fileID: 1821206337}
   waypoints:
   - {fileID: 285988348}
