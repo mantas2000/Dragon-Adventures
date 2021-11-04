@@ -17,7 +17,7 @@ public class AggressiveMS : BaseState
         var distance = Vector2.Distance(_sm.enemy.position, _sm.player.position);
 
         // If player is out of vision, go to Passive Meta state
-        if (distance > _sm.visionDistance) StateMachine.ChangeState(_sm.IdleState);
+        if (distance > _sm.visionDistance * 1.1) StateMachine.ChangeState(_sm.IdleState);
     }
 
     public override void UpdatePhysics()

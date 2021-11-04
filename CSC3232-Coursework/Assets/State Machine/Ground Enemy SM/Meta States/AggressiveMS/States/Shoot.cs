@@ -24,7 +24,7 @@ public class Shoot : AggressiveMS
         var distance = Vector2.Distance(_sm.enemy.position, _sm.player.position);
         
         // If player is too far, chase player
-        if (distance > 7f) StateMachine.ChangeState(_sm.GetInRangeState);
+        if (distance > 8f) StateMachine.ChangeState(_sm.GetInRangeState);
     }
 
     public override void UpdatePhysics()
