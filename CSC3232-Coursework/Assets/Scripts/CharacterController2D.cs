@@ -154,6 +154,9 @@ public class CharacterController2D : MonoBehaviour
         // Let player jump over bridges
         Physics2D.IgnoreLayerCollision(6, 8, _body.velocity.y > 0.0f);
         
+        // Dodge bullets if crouching
+        Physics2D.IgnoreLayerCollision(6, 13, crouch);
+        
         // Disable air attack if player is on the ground
         if (_grounded) _airAttack = false;
     }

@@ -30,14 +30,8 @@ public class BulletController : MonoBehaviour
         // Collision with player
         if (other.gameObject.CompareTag("Player"))
         {
-            // Player dodges the bullet
-            if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Crouch"))
-            {
-                Physics2D.IgnoreLayerCollision(6, 13);
-            }
-            
             // Bullet hits the player, restart the level
-            else SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         // Destroy bullet after hitting object
