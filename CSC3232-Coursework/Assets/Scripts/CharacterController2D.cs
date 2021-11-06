@@ -222,4 +222,9 @@ public class CharacterController2D : MonoBehaviour
     {
         return _airAttack;
     }
+
+    public bool IsGrounded()
+    {
+        return _grounded;
+    }
 }

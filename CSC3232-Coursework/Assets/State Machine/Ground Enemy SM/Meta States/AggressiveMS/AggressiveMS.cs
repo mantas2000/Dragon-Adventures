@@ -25,6 +25,6 @@ public class AggressiveMS : BaseState
         base.UpdatePhysics();
         
         // Flip enemy
-        _sm.renderer.flipX = _sm.enemy.position.x < _sm.player.position.x;
+        _sm.renderer.flipX = _sm.enemy.position.x > _sm.player.position.x;
     }
 }

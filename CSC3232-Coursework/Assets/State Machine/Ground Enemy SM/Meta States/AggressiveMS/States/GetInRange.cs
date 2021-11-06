@@ -30,5 +30,8 @@ public class GetInRange : AggressiveMS
         // Chase down player
         _sm.enemy.position =
             Vector2.MoveTowards(_sm.enemy.position, _sm.player.position, catchSpeed * Time.deltaTime);
+        
+        // Set enemy's animation
+        _sm.ChangeAnimationState("Walking_Enemy_Walk");
     }
 }

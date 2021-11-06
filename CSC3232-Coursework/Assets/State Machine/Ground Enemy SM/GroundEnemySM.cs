@@ -9,6 +9,7 @@ public class GroundEnemySM : StateMachine
 
     public Rigidbody2D enemy;
     public new SpriteRenderer renderer;
+    public Animator animator;
     public Transform[] waypoints;
     public Transform castPoint;
     public Transform player;
@@ -16,6 +17,7 @@ public class GroundEnemySM : StateMachine
     public float moveSpeed = 4f;
     public float visionDistance = 10f;
     public float fireRate = 3f;
+    private string _currentState;
 
     private void Awake()
     {
@@ -28,5 +30,14 @@ public class GroundEnemySM : StateMachine
     protected override BaseState GetInitialState()
     {
         return PatrolState;
+    }
+    
+    public void ChangeAnimationState(string newState)
+    {
+        if (_currentState == newState) return;
+        
+        animator.Play(newState);
+
+        _currentState = newState;
     }
 }

@@ -22,4 +22,12 @@ public class Idle : PassiveMS
         // After being idle for a certain amount of time, go to Patrol state
         if (_waitCounter >= WaitTime) StateMachine.ChangeState(_sm.PatrolState);
     }
+
+    public override void UpdatePhysics()
+    {
+        base.UpdatePhysics();
+        
+        // Set enemy's animation
+        _sm.ChangeAnimationState("Walking_Enemy_Idle");
+    }
 }

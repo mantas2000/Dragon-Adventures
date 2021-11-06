@@ -27,9 +27,12 @@ public class Patrol : PassiveMS
         base.UpdatePhysics();
         
         // Flip enemy
-        _sm.renderer.flipX = _sm.enemy.position.x < _sm.waypoints[_currentWaypoint].position.x;
+        _sm.renderer.flipX = _sm.enemy.position.x > _sm.waypoints[_currentWaypoint].position.x;
         
         // Move towards next waypoint
         _sm.enemy.position = Vector2.MoveTowards(_sm.enemy.position, _sm.waypoints[_currentWaypoint].position, _sm.moveSpeed * Time.deltaTime);
+        
+        // Set enemy's animation
+        _sm.ChangeAnimationState("Walking_Enemy_Walk");
     }
 }

@@ -16,8 +16,8 @@ public class PassiveMS : BaseState
         // Calculate linecast end coordinates
         var endPos = _sm.renderer.flipX switch
         {
-            true => _sm.castPoint.position + Vector3.right * _sm.visionDistance,
-            false => _sm.castPoint.position + Vector3.right * -_sm.visionDistance
+            true => _sm.castPoint.position + Vector3.right * -_sm.visionDistance,
+            false => _sm.castPoint.position + Vector3.right * _sm.visionDistance
         };
         
         // Raycast to check if enemy can see player
