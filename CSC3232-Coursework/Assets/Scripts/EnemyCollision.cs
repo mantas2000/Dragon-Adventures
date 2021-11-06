@@ -5,36 +5,32 @@ public class EnemyCollision : MonoBehaviour
 {
     [SerializeField] private CharacterController2D controller;
     [SerializeField] private Animator playerAnimator;
-    [SerializeField] private GroundEnemySM GroundEnemySm;
+    [SerializeField] private GroundEnemySM groundEnemySm;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        // Collision with player
-        if (other.gameObject.CompareTag("Player"))
+        // Ignore collision if its not with the player
+        if (!other.gameObject.CompareTag("Player")) return;
+        
+        // Player performs Hit Move
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Roll") && controller.IsGrounded())
         {
-            if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Roll") && controller.IsGrounded())
-            {
-                // Enemy dies
-                gameObject.SetActive(false);
-            }
-            
-            else if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Crouch") && !controller.IsGrounded())
-            {
-                // Enemy dies
-                gameObject.SetActive(false);
-            }
-            
-            else if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && !controller.IsGrounded())
-            {
-                // Stun enemy
-                GroundEnemySm.ChangeState(GroundEnemySm.StuntState);
-            }
-            
-            else
-            {
-                // Player dies, restart level
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+            gameObject.SetActive(false);
         }
+            
+        // Player performs Crouch Move
+        else if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Crouch") && !controller.IsGrounded())
+        {
+            gameObject.SetActive(false);
+        }
+            
+        // Player jumps on enemy and stuns it
+        else if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && !controller.IsGrounded())
+        {
+            groundEnemySm.ChangeState(groundEnemySm.StuntState);
+        }
+        
+        // Otherwise, player dies, restart level
+        else SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

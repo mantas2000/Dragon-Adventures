@@ -5,7 +5,6 @@ public class BulletController : MonoBehaviour
 {
     [SerializeField] private float speed = 4f;
     private Rigidbody2D _bullet;
-    private GameObject _player;
     private SpriteRenderer _renderer;
 
     // Start is called before the first frame update
@@ -25,13 +24,22 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Get player's animator component
+        var playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
+        
         // Collision with player
         if (other.gameObject.CompareTag("Player"))
         {
-            // Restart level
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // Player dodges the bullet
+            if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Crouch"))
+            {
+                Physics2D.IgnoreLayerCollision(6, 13);
+            }
+            
+            // Bullet hits the player, restart the level
+            else SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-        
+
         // Destroy bullet after hitting object
         Destroy(gameObject);
     }
