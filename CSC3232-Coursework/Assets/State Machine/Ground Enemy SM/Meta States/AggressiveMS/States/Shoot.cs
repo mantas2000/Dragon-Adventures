@@ -25,12 +25,6 @@ public class Shoot : AggressiveMS
         
         // If player is too far, chase player
         if (distance > 8f) StateMachine.ChangeState(_sm.GetInRangeState);
-
-        // Go to idle state, if enemy is stunt
-        else if (_sm.animator.GetCurrentAnimatorStateInfo(0).IsName("Walking_Enemy_Stunt"))
-        {
-            StateMachine.ChangeState(_sm.IdleState);
-        }
     }
 
     public override void UpdatePhysics()

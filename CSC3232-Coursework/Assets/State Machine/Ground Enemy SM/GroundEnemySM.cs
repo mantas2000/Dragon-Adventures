@@ -6,6 +6,7 @@ public class GroundEnemySM : StateMachine
     [HideInInspector] public Idle IdleState;
     [HideInInspector] public GetInRange GetInRangeState;
     [HideInInspector] public Shoot ShootState;
+    [HideInInspector] public Stunt StuntState;
 
     public Rigidbody2D enemy;
     public new SpriteRenderer renderer;
@@ -25,6 +26,7 @@ public class GroundEnemySM : StateMachine
         PatrolState = new Patrol(this);
         GetInRangeState = new GetInRange(this);
         ShootState = new Shoot(this);
+        StuntState = new Stunt(this);
     }
 
     protected override BaseState GetInitialState()

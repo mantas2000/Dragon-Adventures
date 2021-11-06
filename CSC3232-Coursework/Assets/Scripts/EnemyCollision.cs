@@ -5,7 +5,7 @@ public class EnemyCollision : MonoBehaviour
 {
     [SerializeField] private CharacterController2D controller;
     [SerializeField] private Animator playerAnimator;
-    [SerializeField] private Animator enemyAnimator;
+    [SerializeField] private GroundEnemySM GroundEnemySm;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -27,7 +27,7 @@ public class EnemyCollision : MonoBehaviour
             else if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && !controller.IsGrounded())
             {
                 // Stun enemy
-                enemyAnimator.Play("Walking_Enemy_Stunt");
+                GroundEnemySm.ChangeState(GroundEnemySm.StuntState);
             }
             
             else
