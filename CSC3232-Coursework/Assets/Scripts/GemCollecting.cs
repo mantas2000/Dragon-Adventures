@@ -10,7 +10,7 @@ public class GemCollecting : MonoBehaviour
     
     private void Start()
     {
-        _totalGems = GameObject.FindGameObjectsWithTag("Gem").Length;
+        _totalGems = GameObject.FindGameObjectsWithTag("Gem").Length + GameObject.FindGameObjectsWithTag("Enemy").Length;
         scoreSystem.DrawGems(_gemsCollected, _totalGems);
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -42,6 +42,14 @@ public class GemCollecting : MonoBehaviour
     // Check if player collected all available gems
     public bool AllGemsCollected()
     {
-        return _gemsCollected == _totalGems;
+        return _gemsCollected >= _totalGems;
+    }
+
+    public void EnemyDefeated()
+    {
+        _gemsCollected += 1;
+        
+        // Update scoreboard
+        scoreSystem.DrawGems(_gemsCollected, _totalGems);
     }
 }

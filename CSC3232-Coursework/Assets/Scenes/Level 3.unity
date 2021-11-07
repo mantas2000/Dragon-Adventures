@@ -2207,6 +2207,7 @@ MonoBehaviour:
   controller: {fileID: 326373962}
   playerAnimator: {fileID: 326373963}
   groundEnemySm: {fileID: 1261105689}
+  gemCollecting: {fileID: 326373964}
 --- !u!114 &1261105689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2898,7 +2899,7 @@ TextMesh:
   m_GameObject: {fileID: 1606941914}
   m_Text: 'DUCK FOR A SEOND
 
-    THEN JUMP'
+    THEN PRESS JUMP'
   m_OffsetZ: 0
   m_CharacterSize: 20
   m_LineSpacing: 1
@@ -3297,6 +3298,7 @@ MonoBehaviour:
   controller: {fileID: 326373962}
   playerAnimator: {fileID: 326373963}
   groundEnemySm: {fileID: 1821206333}
+  gemCollecting: {fileID: 326373964}
 --- !u!1 &1922579784
 GameObject:
   m_ObjectHideFlags: 0
