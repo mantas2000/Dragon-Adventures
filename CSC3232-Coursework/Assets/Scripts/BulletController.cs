@@ -6,6 +6,7 @@ public class BulletController : MonoBehaviour
     [SerializeField] private float speed = 4f;
     private Rigidbody2D _bullet;
     private SpriteRenderer _renderer;
+    private bool _isColliding;
 
     // Start is called before the first frame update
     private void Start()
@@ -24,17 +25,27 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Get player's animator component
-        var playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
+        if (_isColliding) return;
+        _isColliding = true;
         
         // Collision with player
         if (other.gameObject.CompareTag("Player"))
         {
+            // Track how many times player is attempting to beat the level
+            var totalGames = PlayerPrefs.GetInt("TotalGames", 0);
+            PlayerPrefs.SetInt("TotalGames", totalGames + 1);
+            
             // Bullet hits the player, restart the level
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         // Destroy bullet after hitting object
         Destroy(gameObject);
+    }
+    
+    private void LateUpdate()
+    {
+        // Reset collision detection
+        _isColliding = false;
     }
 }

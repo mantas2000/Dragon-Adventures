@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,7 +38,15 @@ public class EnemyCollision : MonoBehaviour
         }
         
         // Otherwise, player dies, restart level
-        else SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        else
+        {
+            // Track how many times player is attempting to beat the level
+            var totalGames = PlayerPrefs.GetInt("TotalGames", 0);
+            PlayerPrefs.SetInt("TotalGames", totalGames + 1);
+            
+            // Reload level
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     private void LateUpdate()
