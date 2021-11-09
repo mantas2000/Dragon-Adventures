@@ -871,6 +871,7 @@ MonoBehaviour:
   jumpForce: 600
   wallJumpForce: 1900
   wallSlideSpeed: 1.25
+  teleportFeature: 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 384

@@ -7,6 +7,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private float jumpForce = 600f;
     [SerializeField] private float wallJumpForce = 1900f;
     [SerializeField] private float wallSlideSpeed = 1.25f;
+    [SerializeField] private bool teleportFeature;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private LayerMask whatIsWall;
     [SerializeField] private Transform groundCheck;
@@ -48,7 +49,7 @@ public class CharacterController2D : MonoBehaviour
         WallCheck();
 
         // Teleport player if it enters out of bounds
-        Teleport();
+        if (teleportFeature) Teleport();
     }
     
     public void Move(float move, bool jump, bool crouch, bool hitMove, bool crouchMove)

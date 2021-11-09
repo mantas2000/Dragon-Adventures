@@ -731,7 +731,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1784033139
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 04214dc21349240c8b234d8a34dac1dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -840,6 +840,7 @@ MonoBehaviour:
   jumpForce: 600
   wallJumpForce: 1900
   wallSlideSpeed: 1.25
+  teleportFeature: 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 384
@@ -4227,7 +4228,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -901337799
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
