@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DoorController : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class DoorController : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         _allGemsCollected = controller.AllGemsCollected();
         _animator.SetBool("AllGemsCollected", _allGemsCollected);
@@ -21,7 +22,11 @@ public class DoorController : MonoBehaviour
         // Collision with player
         if (other.gameObject.CompareTag("Player") && _allGemsCollected)
         {
-            // Application.LoadLevel("");
+            // Record that player completed a level
+            PlayerPrefs.SetString(SceneManager.GetActiveScene().buildIndex.ToString(), "true");
+            
+            // Go back to overworld
+            SceneManager.LoadScene("Overworld");
         }
     }
 }

@@ -1,8 +1,15 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    private void Start()
+    {
+        // Delete previous game data
+        PlayerPrefs.DeleteAll();
+    }
+
     public void PlayGame()
     {
         // Load overworld
