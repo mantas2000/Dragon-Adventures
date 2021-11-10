@@ -1707,7 +1707,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'DUCK FOR A SEOND
 
-    THEN PRESS JUMP'
+    THEN  JUMP'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f9c4b7ca6488b341882e8693aff1b76, type: 2}
   m_sharedMaterial: {fileID: 7514990378510377523, guid: 0f9c4b7ca6488b341882e8693aff1b76, type: 2}
@@ -4100,7 +4100,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'JUMP ON TO STUN
 
-    HIT OR AIR MOVE TO DEFEAT'
+    DASH OR DUCK TO DEFEAT'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f9c4b7ca6488b341882e8693aff1b76, type: 2}
   m_sharedMaterial: {fileID: 7514990378510377523, guid: 0f9c4b7ca6488b341882e8693aff1b76, type: 2}
