@@ -94,7 +94,7 @@ public class CharacterController2D : MonoBehaviour
         }
         
         // Check if player is wall jumping
-        if (_wallJump && (_grounded || Time.time - _lastTimeOnWall > 1f))
+        if (_wallJump && (_grounded || Time.time - _lastTimeOnWall > 0.5f))
         {
             _wallJump = false;
         }
