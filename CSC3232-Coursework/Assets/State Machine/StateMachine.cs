@@ -31,10 +31,4 @@ public class StateMachine : MonoBehaviour
     {
         return null;
     }
-
-    private void OnGUI()
-    {
-        var content = _currentState != null ? _currentState.Name : "No current state";
-        GUILayout.Label($"<color='white'><size=40>{content}</size></color>");
-    }
 }

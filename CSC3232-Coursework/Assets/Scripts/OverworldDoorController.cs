@@ -25,15 +25,16 @@ public class OverworldDoorController : MonoBehaviour
             _previousLevelCompleted = true;
         }
         
+        // Activate doors
         animator.SetBool("LevelCompleted", _previousLevelCompleted);
     }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Collision with player
+        // Check whether the player is colliding with the doors and has completed the previous level
         if (other.gameObject.CompareTag("Player") && _previousLevelCompleted)
         {
-            // Go to next level
+            // Go to the next level
             SceneManager.LoadScene(levelIndex);
         }
     }

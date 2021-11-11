@@ -45,6 +45,7 @@ public class GemCollecting : MonoBehaviour
         return _gemsCollected >= _totalGems;
     }
 
+    // Reward player after beating enemies
     public void EnemyDefeated()
     {
         _gemsCollected += 1;

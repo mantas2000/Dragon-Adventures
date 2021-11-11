@@ -15,7 +15,7 @@ public class Patrol : PassiveMS
     {
         base.UpdateLogic();
         
-        // Go to Idle state, if player reached one of the wayponts
+        // Go to Idle state, if player reached one of the waypoints
         if (Vector2.Distance(_sm.enemy.position, _sm.waypoints[_currentWaypoint].position) < 1f)
         {
             StateMachine.ChangeState(_sm.IdleState);

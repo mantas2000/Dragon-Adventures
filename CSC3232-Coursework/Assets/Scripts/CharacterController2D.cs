@@ -52,7 +52,7 @@ public class CharacterController2D : MonoBehaviour
         if (teleportFeature) Teleport();
     }
     
-    public void Move(float move, bool jump, bool crouch, bool hitMove, bool crouchMove)
+    public void Move(float move, bool jump, bool crouch, bool dashMove, bool duckMove)
     {
         // Horizontal movement
         if (!crouch)
@@ -64,15 +64,17 @@ public class CharacterController2D : MonoBehaviour
                     move *= 2;
                     break;
                 
-                // Check if hit move is available
-                case true when hitMove:
+                // Check if dash move is available
+                case true when dashMove:
                     move *= 60;
                     break;
                 
+                // Set player's running animations if it's moving
                 case true when Mathf.Abs(move) > 0.01f && Mathf.Abs(_body.velocity.y) < 0.01f:
                     ChangeAnimationState(PLAYER_RUN);
                     break;
                 
+                // Set player's running animations if it's not moving
                 case true when Mathf.Abs(_body.velocity.x) < 0.01f && Mathf.Abs(_body.velocity.y) < 0.01f:
                     ChangeAnimationState(PLAYER_IDLE);
                     break;
@@ -101,21 +103,21 @@ public class CharacterController2D : MonoBehaviour
 
         switch (_grounded)
         {
-            // Add a vertical force to the player
+            // Add a vertical force to the player (JUMP)
             case true when jump && !_onLeftWall && !_onRightWall:
                 _grounded = false;
                 _body.AddForce(new Vector2(0f, jumpForce));
                 ChangeAnimationState(PLAYER_JUMP);
                 break;
             
-            // Add a special vertical force to the player
-            case true when crouchMove:
+            // Add a special vertical force to the player (DASH MOVE)
+            case true when duckMove:
                 _grounded = false;
                 _body.AddForce(new Vector2(0f, (float) (jumpForce * 1.5)));
                 ChangeAnimationState(PLAYER_ROLL);
                 break;
             
-            // Attack from air
+            // Attack from air (DUCK MOVE)
             case false when crouch:
                 _airAttack = true;
                 _body.AddForce(new Vector2(0f, -jumpForce));

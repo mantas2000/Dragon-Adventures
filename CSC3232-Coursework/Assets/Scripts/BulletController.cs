@@ -11,7 +11,7 @@ public class BulletController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        // Get bullets travel direction
+        // Get bullet's travel direction
         var shootDirection = (GameObject.FindWithTag("Player").transform.position - transform.position).normalized * speed;
         
         // Shoot bullet

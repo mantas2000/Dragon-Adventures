@@ -20,7 +20,7 @@ public class EnemyCollision : MonoBehaviour
         // Player performs Dash Move
         if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Roll") && controller.IsGrounded())
         {
-            // Track how many times player killed enemy
+            // Track how many times player killed enemies
             var totalKills = PlayerPrefs.GetInt("TotalKills", 0);
             PlayerPrefs.SetInt("TotalKills", totalKills + 1);
             
@@ -31,7 +31,7 @@ public class EnemyCollision : MonoBehaviour
         // Player performs Duck Move
         else if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Crouch") && !controller.IsGrounded())
         {
-            // Track how many times player killed enemy
+            // Track how many times player killed enemies
             var totalKills = PlayerPrefs.GetInt("TotalKills", 0);
             PlayerPrefs.SetInt("TotalKills", totalKills + 1);
             

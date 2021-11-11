@@ -9,8 +9,8 @@ public class PlayerMovement : MonoBehaviour
     private float _horizontalMove;
     private bool _jump;
     private bool _crouch;
-    private bool _hitMove;
-    private bool _crouchMove;
+    private bool _dashMove;
+    private bool _duckMove;
     private float _lastLeftTapTime;
     private float _lastRightTapTime;
     private float _holdTime;
@@ -39,15 +39,15 @@ public class PlayerMovement : MonoBehaviour
         {
             _holdTime += Time.deltaTime;
 
-            // Check if crouching special move is available
+            // Check if Duck move is available
             if (_holdTime > 1f)
             {
                 _animator.Play("Player_Crouch_Move");
                 
-                // Activate crouching special move
+                // Activate Duck move
                 if (_jump)
                 {
-                    _crouchMove = true;
+                    _duckMove = true;
                     _crouch = false;
                     _holdTime = 0;
                 }
@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             _crouch = false;
-            _crouchMove = false;
+            _duckMove = false;
             _holdTime = 0;
         }
 
@@ -76,22 +76,22 @@ public class PlayerMovement : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex != 1 ? "Overworld" : "Menu");
         }
         
-        // Monitor left arrow clicks for hit move activation
+        // Monitor left arrow clicks for Dash move activation
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
             if (Time.time - _lastLeftTapTime < 0.25f)
             {
-                _hitMove = true;
+                _dashMove = true;
                 _animator.Play("Player_Roll");
             }
 
             _lastLeftTapTime = Time.time;
         }
         
-        // Monitor right arrow clicks for hit move activation
+        // Monitor right arrow clicks for Dash move activation
         if (Input.GetKeyDown(KeyCode.RightArrow)){
             if (Time.time - _lastRightTapTime < 0.25f)
             {
-                _hitMove = true;
+                _dashMove = true;
                 _animator.Play("Player_Roll");
             }
 
@@ -101,9 +101,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        controller.Move(_horizontalMove * Time.fixedDeltaTime, _jump, _crouch, _hitMove, _crouchMove);
+        controller.Move(_horizontalMove * Time.fixedDeltaTime, _jump, _crouch, _dashMove, _duckMove);
         _jump = false;
-        _hitMove = false;
-        _crouchMove = false;
+        _dashMove = false;
+        _duckMove = false;
     }
 }

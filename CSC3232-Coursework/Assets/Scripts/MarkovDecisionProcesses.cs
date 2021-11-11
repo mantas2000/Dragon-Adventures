@@ -568,6 +568,10 @@ class Utils {
         }
     }
     
+    /// <summary>
+    /// This function performs analysis using reinforced learning and Markov Charts.
+    /// Returns the best possible move for enemy in order to beat the player.
+    /// </summary>
     public static string MarkovChartAnalysis()
     {
         var G = new WeightedMultiGraph<string, string>();
@@ -592,6 +596,10 @@ class Utils {
         return (from cp in policyIteration.detPolicy where cp.Value != null select cp.Value).FirstOrDefault();
     }
 
+    /// <summary>
+    /// This function analyses previous games data and calculates how strong the player is.
+    /// Returns gamma for the enemy to use in order to maximise game fairness.
+    /// </summary>
     private static float CalculateGamma()
     {
         // Get player previous performance data
@@ -608,10 +616,6 @@ class Utils {
             case 0 when totalDeaths < 2:
                 return 1;
         }
-
-        Debug.Log("KILLS: " + totalKills);
-        Debug.Log("DEATHS: " + totalDeaths);
-        Debug.Log("RATIO: " + Mathf.Clamp01((float) totalKills / totalDeaths));
 
         // Else, calculate and return gamma
         return Mathf.Clamp01((float) totalKills / totalDeaths);
