@@ -26,7 +26,24 @@ public class PassiveMS : BaseState
         // If player is found, go to Aggressive Meta state
         if (hit2D.collider != null && hit2D.collider.CompareTag("Player"))
         {
-            StateMachine.ChangeState(_sm.GetInRangeState);
+            // Get results from Markov Chart
+            var markovAnalysis = MarkovDecisionProcesses.MarkovChartAnalysis();
+
+            // Depending on results from Markov Chart Analysis, go to chosen state
+            switch (markovAnalysis)
+            {
+                case "Shoot":
+                    StateMachine.ChangeState(_sm.ShootState);
+                    break;
+            
+                case "Chase":
+                    StateMachine.ChangeState(_sm.GetInRangeState);
+                    break;
+                
+                case "GetClose&Shoot":
+                    StateMachine.ChangeState(_sm.GetInRangeState);
+                    break;
+            }
         }
     }
 }

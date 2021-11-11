@@ -578,12 +578,12 @@ class Utils {
             var defeat = G.addVertex("Defeat", false, true);
                 
             G.addEdge(detect, getInRange, "GetClose&Shoot", 0.6, -2.0);
-            G.addEdge(detect, shoot, "Chase", 0.5, -1.0);
-            G.addEdge(detect, chase, "Shoot", 0.4, -1.0);
-                
+            G.addEdge(detect, chase, "Chase", 0.5, -1.0);
+            G.addEdge(detect, shoot, "Shoot", 0.4, -1.0);
+                    
             G.addEdge(getInRange, shoot, "getInRange&shoot", 0.8, 3.0);
-            G.addEdge(shoot, defeat, "chase&defeat", 0.6, 4.0);
-            G.addEdge(chase, defeat, "shoot&defeat", 0.4, 5.0);
+            G.addEdge(chase, defeat, "chase&defeat", 0.6, 4.0);
+            G.addEdge(shoot, defeat, "shoot&defeat", 0.4, 6.0);
             
             
         var policyIteration = new PolicyIteration<string, string>(G, CalculateGamma());

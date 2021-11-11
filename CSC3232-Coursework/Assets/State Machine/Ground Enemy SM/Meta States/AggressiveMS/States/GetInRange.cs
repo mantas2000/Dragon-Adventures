@@ -13,6 +13,9 @@ public class GetInRange : AggressiveMS
     {
         base.UpdateLogic();
         
+        // Check whether Markov Chart not decided to use GetClose&Shoot tactics
+        if (MarkovDecisionProcesses.MarkovChartAnalysis() != "GetClose&Shoot") return;
+        
         // Calculate distance between enemy and player
         var distance = Vector2.Distance(_sm.enemy.position, _sm.player.position);
         

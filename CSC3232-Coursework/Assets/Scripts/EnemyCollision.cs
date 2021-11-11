@@ -17,16 +17,24 @@ public class EnemyCollision : MonoBehaviour
         // Ignore collision if its not with the player
         if (!other.gameObject.CompareTag("Player")) return;
         
-        // Player performs Hit Move
+        // Player performs Dash Move
         if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Roll") && controller.IsGrounded())
         {
+            // Track how many times player killed enemy
+            var totalKills = PlayerPrefs.GetInt("TotalKills", 0);
+            PlayerPrefs.SetInt("TotalKills", totalKills + 1);
+            
             gameObject.SetActive(false);
             gemCollecting.EnemyDefeated();
         }
             
-        // Player performs Crouch Move
+        // Player performs Duck Move
         else if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Crouch") && !controller.IsGrounded())
         {
+            // Track how many times player killed enemy
+            var totalKills = PlayerPrefs.GetInt("TotalKills", 0);
+            PlayerPrefs.SetInt("TotalKills", totalKills + 1);
+            
             gameObject.SetActive(false);
             gemCollecting.EnemyDefeated();
         }
@@ -40,9 +48,9 @@ public class EnemyCollision : MonoBehaviour
         // Otherwise, player dies, restart level
         else
         {
-            // Track how many times player is attempting to beat the level
-            var totalGames = PlayerPrefs.GetInt("TotalGames", 0);
-            PlayerPrefs.SetInt("TotalGames", totalGames + 1);
+            // Track how many times player died
+            var totalDeaths = PlayerPrefs.GetInt("TotalDeaths", 0);
+            PlayerPrefs.SetInt("TotalDeaths", totalDeaths + 1);
             
             // Reload level
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

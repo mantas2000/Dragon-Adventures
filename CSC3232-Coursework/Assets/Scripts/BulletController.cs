@@ -31,9 +31,9 @@ public class BulletController : MonoBehaviour
         // Collision with player
         if (other.gameObject.CompareTag("Player"))
         {
-            // Track how many times player is attempting to beat the level
-            var totalGames = PlayerPrefs.GetInt("TotalGames", 0);
-            PlayerPrefs.SetInt("TotalGames", totalGames + 1);
+            // Track how many times player died
+            var totalDeaths = PlayerPrefs.GetInt("TotalDeaths", 0);
+            PlayerPrefs.SetInt("TotalDeaths", totalDeaths + 1);
             
             // Bullet hits the player, restart the level
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
