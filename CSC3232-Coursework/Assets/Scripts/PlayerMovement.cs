@@ -70,6 +70,12 @@ public class PlayerMovement : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         
+        // Exit level
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex != 1 ? "Overworld" : "Menu");
+        }
+        
         // Monitor left arrow clicks for hit move activation
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
             if (Time.time - _lastLeftTapTime < 0.25f)
