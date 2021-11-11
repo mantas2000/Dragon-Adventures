@@ -11,6 +11,7 @@ TagManager:
   - Destructible
   - Enemy
   - Bullet
+  - Not_Obstacle
   layers:
   - Default
   - TransparentFX
