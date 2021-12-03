@@ -66,6 +66,7 @@ public class CharacterController2D : MonoBehaviour
                 
                 // Check if dash move is available
                 case true when dashMove:
+                    FindObjectOfType<AudioManager>().Play("Attack");
                     move *= 60;
                     break;
                 
@@ -105,20 +106,23 @@ public class CharacterController2D : MonoBehaviour
         {
             // Add a vertical force to the player (JUMP)
             case true when jump && !_onLeftWall && !_onRightWall:
+                FindObjectOfType<AudioManager>().Play("Jump");
                 _grounded = false;
                 _body.AddForce(new Vector2(0f, jumpForce));
                 ChangeAnimationState(PLAYER_JUMP);
                 break;
             
-            // Add a special vertical force to the player (DASH MOVE)
+            // Add a special vertical force to the player (SUPER JUMP)
             case true when duckMove:
+                FindObjectOfType<AudioManager>().Play("Attack");
                 _grounded = false;
                 _body.AddForce(new Vector2(0f, (float) (jumpForce * 1.5)));
                 ChangeAnimationState(PLAYER_ROLL);
                 break;
             
-            // Attack from air (DUCK MOVE)
+            // Attack from air
             case false when crouch:
+                FindObjectOfType<AudioManager>().Play("Stomp");
                 _airAttack = true;
                 _body.AddForce(new Vector2(0f, -jumpForce));
                 break;
@@ -139,6 +143,7 @@ public class CharacterController2D : MonoBehaviour
             
             // Jump from left wall
             case false when _onLeftWall && jump:
+                FindObjectOfType<AudioManager>().Play("Attack");
                 _body.AddForce(new Vector2(wallJumpForce, wallJumpForce * 3));
                 ChangeAnimationState(PLAYER_ROLL);
                 _wallJump = true;
@@ -147,6 +152,7 @@ public class CharacterController2D : MonoBehaviour
             
             // Jump from right wall
             case false when _onRightWall && jump:
+                FindObjectOfType<AudioManager>().Play("Attack");
                 _body.AddForce(new Vector2(-wallJumpForce, wallJumpForce * 3));
                 ChangeAnimationState(PLAYER_ROLL);
                 _wallJump = true;

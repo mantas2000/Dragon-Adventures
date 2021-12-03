@@ -6,6 +6,8 @@ public class DoorController : MonoBehaviour
     [SerializeField] private GemCollecting controller;
     private Animator _animator;
     private bool _allGemsCollected;
+    private bool _levelCompleted;
+    
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -15,6 +17,13 @@ public class DoorController : MonoBehaviour
     {
         // Enable doors if all gems are collected
         _allGemsCollected = controller.AllGemsCollected();
+
+        // If all gems collected, play level completion sound
+        if (_allGemsCollected && !_levelCompleted)
+        {
+            _levelCompleted = true;
+            FindObjectOfType<AudioManager>().Play("LevelCompleted");
+        }
         _animator.SetBool("AllGemsCollected", _allGemsCollected);
     }
     

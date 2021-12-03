@@ -21,6 +21,9 @@ public class GemCollecting : MonoBehaviour
         // Collision with gems
         if (other.gameObject.CompareTag("Gem"))
         {
+            // Play sound
+            FindObjectOfType<AudioManager>().Play("GemCollected");
+            
             other.gameObject.SetActive(false);
             _gemsCollected += 1;
             

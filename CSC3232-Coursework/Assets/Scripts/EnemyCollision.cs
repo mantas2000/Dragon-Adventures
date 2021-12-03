@@ -20,6 +20,9 @@ public class EnemyCollision : MonoBehaviour
         // Player performs Dash Move
         if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Roll") && controller.IsGrounded())
         {
+            // Play enemy's death sound
+            FindObjectOfType<AudioManager>().Play("Hit");
+            
             // Track how many times player killed enemies
             var totalKills = PlayerPrefs.GetInt("TotalKills", 0);
             PlayerPrefs.SetInt("TotalKills", totalKills + 1);
@@ -31,6 +34,9 @@ public class EnemyCollision : MonoBehaviour
         // Player performs Duck Move
         else if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Crouch") && !controller.IsGrounded())
         {
+            // Play enemy's death sound
+            FindObjectOfType<AudioManager>().Play("Hit");
+            
             // Track how many times player killed enemies
             var totalKills = PlayerPrefs.GetInt("TotalKills", 0);
             PlayerPrefs.SetInt("TotalKills", totalKills + 1);
@@ -42,12 +48,18 @@ public class EnemyCollision : MonoBehaviour
         // Player jumps on enemy and stuns it
         else if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && !controller.IsGrounded())
         {
+            // Play enemy's stun sound
+            FindObjectOfType<AudioManager>().Play("EnemyStun");
+            
             groundEnemySm.ChangeState(groundEnemySm.StuntState);
         }
         
         // Otherwise, player dies, restart level
         else
         {
+            // Play player's death sound
+            FindObjectOfType<AudioManager>().Play("PlayerDeath");
+            
             // Track how many times player died
             var totalDeaths = PlayerPrefs.GetInt("TotalDeaths", 0);
             PlayerPrefs.SetInt("TotalDeaths", totalDeaths + 1);

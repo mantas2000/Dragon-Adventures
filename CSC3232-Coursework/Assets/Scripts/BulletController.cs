@@ -31,6 +31,9 @@ public class BulletController : MonoBehaviour
         // Collision with player
         if (other.gameObject.CompareTag("Player"))
         {
+            // Play player's death sound
+            FindObjectOfType<AudioManager>().Play("PlayerDeath");
+            
             // Track how many times player died
             var totalDeaths = PlayerPrefs.GetInt("TotalDeaths", 0);
             PlayerPrefs.SetInt("TotalDeaths", totalDeaths + 1);
