@@ -14,6 +14,9 @@ public class BulletController : MonoBehaviour
         // Get bullet's travel direction
         var shootDirection = (GameObject.FindWithTag("Player").transform.position - transform.position).normalized * speed;
         
+        // Play bullet sound
+        FindObjectOfType<AudioManager>().Play("Shoot");
+        
         // Shoot bullet
         _bullet = GetComponent<Rigidbody2D>();
         _bullet.velocity = new Vector2(shootDirection.x, shootDirection.y);
