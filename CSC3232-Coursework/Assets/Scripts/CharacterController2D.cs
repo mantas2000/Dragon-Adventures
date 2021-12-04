@@ -71,6 +71,7 @@ public class CharacterController2D : MonoBehaviour
                 // Check if dash move is available
                 case true when dashMove:
                     FindObjectOfType<AudioManager>().Play("Attack");
+                    jumpDust.Play();
                     move *= 60;
                     break;
                 
