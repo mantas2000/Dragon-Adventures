@@ -1,4 +1,5 @@
 using System.Linq;
+using Cinemachine;
 using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
@@ -17,6 +18,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private ParticleSystem leftWallDust;
     [SerializeField] private ParticleSystem rightWallDust;
     [SerializeField] private ParticleSystem duckDust;
+    [SerializeField] private CinemachineImpulseSource impulseSource;
 
     private Rigidbody2D _body;
     private SpriteRenderer _renderer;
@@ -176,6 +178,9 @@ public class CharacterController2D : MonoBehaviour
         // Disable air attack if player is on the ground
         if (_grounded && _airAttack)
         {
+            // Shake camera
+            impulseSource.GenerateImpulse();
+            
             // Play stomp sound
             FindObjectOfType<AudioManager>().Play("Stomp");
             

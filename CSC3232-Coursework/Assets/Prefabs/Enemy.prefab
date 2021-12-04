@@ -204,7 +204,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   castPoint: {fileID: 7463393438435219575}
-  player: {fileID: 0}
+  player: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
   bullet: {fileID: 4326138593545257438, guid: e5f72c719a20a814ea0fd958eedaad4e, type: 3}
   moveSpeed: 1
   visionDistance: 10
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289de427d9f43c447aaaa0b2b40f9fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
-  playerAnimator: {fileID: 0}
+  controller: {fileID: 181518922956832410, guid: ce10016ddfa64724f911737ded84705e, type: 3}
+  playerAnimator: {fileID: 181518922956832411, guid: ce10016ddfa64724f911737ded84705e, type: 3}
   groundEnemySm: {fileID: 7463393438538014610}
-  gemCollecting: {fileID: 0}
+  gemCollecting: {fileID: 181518922956832412, guid: ce10016ddfa64724f911737ded84705e, type: 3}

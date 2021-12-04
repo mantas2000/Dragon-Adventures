@@ -145,4 +145,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116bb4bb3c14a8f4b8f9cda3dff89423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
+  controller: {fileID: 181518922956832411, guid: ce10016ddfa64724f911737ded84705e, type: 3}
+  impulseSource: {fileID: 724518440, guid: ce10016ddfa64724f911737ded84705e, type: 3}
