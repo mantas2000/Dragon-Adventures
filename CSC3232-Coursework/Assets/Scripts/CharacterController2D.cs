@@ -13,6 +13,10 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform leftWallCheck;
     [SerializeField] private Transform rightWallCheck;
+    [SerializeField] private ParticleSystem jumpDust;
+    [SerializeField] private ParticleSystem leftWallDust;
+    [SerializeField] private ParticleSystem rightWallDust;
+    [SerializeField] private ParticleSystem duckDust;
 
     private Rigidbody2D _body;
     private SpriteRenderer _renderer;
@@ -107,6 +111,7 @@ public class CharacterController2D : MonoBehaviour
             // Add a vertical force to the player (JUMP)
             case true when jump && !_onLeftWall && !_onRightWall:
                 FindObjectOfType<AudioManager>().Play("Jump");
+                jumpDust.Play();
                 _grounded = false;
                 _body.AddForce(new Vector2(0f, jumpForce));
                 ChangeAnimationState(PLAYER_JUMP);
@@ -129,6 +134,7 @@ public class CharacterController2D : MonoBehaviour
             
             // Slide from left wall
             case false when _onLeftWall && !jump:
+                leftWallDust.Play();
                 _renderer.flipX = false;
                 _body.velocity = new Vector2(_body.velocity.x, -wallSlideSpeed);
                 if (!_wallJump) ChangeAnimationState(move > 0.01f ? PLAYER_IDLE : PLAYER_SLIDE);
@@ -136,6 +142,7 @@ public class CharacterController2D : MonoBehaviour
             
             // Slide from right wall
             case false when _onRightWall && !jump:
+                rightWallDust.Play();
                 _renderer.flipX = true;
                 _body.velocity = new Vector2(_body.velocity.x, -wallSlideSpeed);
                 if (!_wallJump) ChangeAnimationState(move < -0.01f ? PLAYER_IDLE : PLAYER_SLIDE);
@@ -167,18 +174,33 @@ public class CharacterController2D : MonoBehaviour
         Physics2D.IgnoreLayerCollision(6, 13, crouch);
         
         // Disable air attack if player is on the ground
-        if (_grounded) _airAttack = false;
+        if (_grounded && _airAttack)
+        {
+            // Play dust effect
+            duckDust.Play();
+            
+            // Disable air attack
+            _airAttack = false;
+        }
     }
     
     // Flip player to match movement direction
     private void Flip(float movementDirection)
     {
-        if (movementDirection > 0)
+        if (movementDirection > 0 && _renderer.flipX)
         {
+            // Play dust effect
+            jumpDust.Play();
+            
+            // Flip player
             _renderer.flipX = false;
         }
-        else if (movementDirection < 0)
+        else if (movementDirection < 0 && !_renderer.flipX)
         {
+            // Play dust effect
+            jumpDust.Play();
+            
+            // Flip player
             _renderer.flipX = true;
         }
     }
