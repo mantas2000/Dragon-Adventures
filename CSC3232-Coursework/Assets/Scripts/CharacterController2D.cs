@@ -128,7 +128,6 @@ public class CharacterController2D : MonoBehaviour
             
             // Attack from air
             case false when crouch:
-                FindObjectOfType<AudioManager>().Play("Stomp");
                 _airAttack = true;
                 _body.AddForce(new Vector2(0f, -jumpForce));
                 break;
@@ -177,6 +176,9 @@ public class CharacterController2D : MonoBehaviour
         // Disable air attack if player is on the ground
         if (_grounded && _airAttack)
         {
+            // Play stomp sound
+            FindObjectOfType<AudioManager>().Play("Stomp");
+            
             // Play dust effect
             duckDust.Play();
             
