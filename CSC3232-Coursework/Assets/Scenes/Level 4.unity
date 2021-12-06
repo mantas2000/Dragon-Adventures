@@ -1352,7 +1352,7 @@ MonoBehaviour:
   radius: 0.12
   height: 0.01
   canMove: 1
-  maxSpeed: 3
+  maxSpeed: 2
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
@@ -1418,7 +1418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0cfd900f6b2e04aaf285b79f260a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 699083903}
   AIPath: {fileID: 699083906}
 --- !u!114 &699083909
 MonoBehaviour:
@@ -1434,8 +1433,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 316386952}
   playerAnimator: {fileID: 316386949}
-  groundEnemySm: {fileID: 0}
-  animator: {fileID: 699083903}
   gemCollecting: {fileID: 649841989}
 --- !u!1 &703150879
 GameObject:

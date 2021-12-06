@@ -5,8 +5,6 @@ public class FlyingEnemyCollision : MonoBehaviour
 {
 [SerializeField] private CharacterController2D controller;
     [SerializeField] private Animator playerAnimator;
-    [SerializeField] private GroundEnemySM groundEnemySm;
-    [SerializeField] private Animator animator;
     [SerializeField] private GemCollecting gemCollecting;
     private bool _isColliding;
 
@@ -45,24 +43,21 @@ public class FlyingEnemyCollision : MonoBehaviour
             gameObject.SetActive(false);
             gemCollecting.EnemyDefeated();
         }
-            
-        // Player jumps on enemy and stuns it
-        else if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_Jump") && !controller.IsGrounded())
-        {
-            // Play enemy's stun sound
-            FindObjectOfType<AudioManager>().Play("EnemyStun");
-
-            if (groundEnemySm != null)
-            {
-                groundEnemySm.ChangeState(groundEnemySm.StuntState);
-            }
-
-            else if (animator != null)
-            {
-                animator.SetBool("IsStunned", true);
-            }
-        }
         
+        // Player is attacking (Super Jump or Wall Jump)
+        else if (FindObjectOfType<AudioManager>().IsPlaying("Attack"))
+        {
+            // Play enemy's death sound
+            FindObjectOfType<AudioManager>().Play("Hit");
+            
+            // Track how many times player killed enemies
+            var totalKills = PlayerPrefs.GetInt("TotalKills", 0);
+            PlayerPrefs.SetInt("TotalKills", totalKills + 1);
+            
+            gameObject.SetActive(false);
+            gemCollecting.EnemyDefeated();
+        }
+
         // Otherwise, player dies, restart level
         else
         {
