@@ -566,6 +566,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 304588564}
   m_CullTransparentMesh: 1
+--- !u!95 &316386949 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 181518922956832411, guid: ce10016ddfa64724f911737ded84705e, type: 3}
+  m_PrefabInstance: {fileID: 1642195365}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &316386952 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 181518922956832410, guid: ce10016ddfa64724f911737ded84705e, type: 3}
+  m_PrefabInstance: {fileID: 1642195365}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52d9a9917a08d34db3013e2f3ce5f15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &397077499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,6 +1203,7 @@ GameObject:
   - component: {fileID: 699083906}
   - component: {fileID: 699083902}
   - component: {fileID: 699083908}
+  - component: {fileID: 699083909}
   m_Layer: 6
   m_Name: Flying Enemy
   m_TagString: Enemy
@@ -1306,7 +1323,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.008191932}
+  m_Offset: {x: 0, y: -0.0069674775}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1317,7 +1334,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.17185676, y: 0.1805934}
+  m_Size: {x: 0.18201573, y: 0.1903889}
   m_EdgeRadius: 0
 --- !u!114 &699083906
 MonoBehaviour:
@@ -1401,7 +1418,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0cfd900f6b2e04aaf285b79f260a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 699083903}
   AIPath: {fileID: 699083906}
+--- !u!114 &699083909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699083900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1faefe4a4193029448f76049edb03cef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 316386952}
+  playerAnimator: {fileID: 316386949}
+  groundEnemySm: {fileID: 0}
+  animator: {fileID: 699083903}
+  gemCollecting: {fileID: 649841989}
 --- !u!1 &703150879
 GameObject:
   m_ObjectHideFlags: 0
