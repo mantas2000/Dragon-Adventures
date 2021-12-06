@@ -4,6 +4,7 @@ public class WaypointMovement : MonoBehaviour
 {
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private float speed = 2f;
+    [SerializeField] private BoxCollider2D collider;
     private int _currentWaypoint;
 
     // Update is called once per frame
@@ -20,7 +21,7 @@ public class WaypointMovement : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, waypoints[_currentWaypoint].transform.position, speed * Time.deltaTime);
         
         // Update AIPath grid during runtime
-        AstarPath.active.Scan();
+        AstarPath.active.UpdateGraphs(collider.bounds);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
