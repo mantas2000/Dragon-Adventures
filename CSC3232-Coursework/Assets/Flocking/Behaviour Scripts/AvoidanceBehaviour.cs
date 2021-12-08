@@ -30,9 +30,6 @@ public class AvoidanceBehaviour : FlockBehaviour
             avoidanceMove /= numberOfObjects;
         }
 
-        // Create offset from agent position
-        //avoidanceMove -= (Vector2) agent.transform.position;
-
         return avoidanceMove;
     }
 }
