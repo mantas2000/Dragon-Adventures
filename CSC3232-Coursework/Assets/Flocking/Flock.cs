@@ -5,6 +5,7 @@ using UnityEngine;
 public class Flock : MonoBehaviour
 {
     [SerializeField] private FlockAgent agentPrefab;
+    [SerializeField] private Vector2 sceneSize = new Vector2(10, 20);
     [SerializeField] private FlockBehaviour behaviour;
     [Range(10, 500)] public int startingCount = 250;
     [Range(1f, 100f)] public float driveFactor = 10f;
@@ -19,21 +20,29 @@ public class Flock : MonoBehaviour
     private float _squareAvoidanceRadius;
 
     public float SquareAvoidanceRadius => _squareAvoidanceRadius;
+    
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.position, sceneSize * 2);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, 0.2f);
+    }
 
     // Start is called before the first frame update
     private void Start()
     {
-        // Prepare variables
+        // Prepare max values
         _squareMaxSpeed = Mathf.Pow(maxSpeed, 2);
         _squareNeighbourRadius = Mathf.Pow(neighbourRadius, 2);
         _squareAvoidanceRadius = _squareNeighbourRadius * Mathf.Pow(avoidanceRadiusMultiplier, 2);
 
-        for (int i = 0; i < startingCount; i++)
+        for (var i = 0; i < startingCount; i++)
         {
             // Create new agent
             var newAgent = Instantiate(
                 agentPrefab,
-                Random.insideUnitCircle * startingCount * AgentDensity,
+                new Vector3(Random.Range(-sceneSize.x, sceneSize.x), Random.Range(-sceneSize.y, sceneSize.y), 0f),
                 Quaternion.Euler(Vector3.forward * Random.Range(0, 360)),
                 transform
             );
