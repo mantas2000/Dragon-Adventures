@@ -9,9 +9,8 @@ public class Flock : MonoBehaviour
     [SerializeField] private FlockBehaviour behaviour;
     [SerializeField] private Transform target;
     [SerializeField] private LayerMask obstacleLayers;
-    [Range(10, 500)] public int startingCount = 250;
-    [Range(1f, 100f)] public float driveFactor = 10f;
-    [Range(1f, 100f)] public float maxSpeed = 5f;
+    [SerializeField] public int startingCount = 20;
+    [Range(1f, 50f)] public float maxSpeed = 5f;
     [Range(1f, 10f)] public float neighbourRadius = 1.5f;
     [Range(0f, 1f)] public float avoidanceRadiusMultiplier = 0.5f;
 
@@ -23,14 +22,6 @@ public class Flock : MonoBehaviour
     public float SquareAvoidanceRadius => _squareAvoidanceRadius;
     public Transform Target => target;
     public LayerMask ObstacleLayers => obstacleLayers;
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, sceneSize * 2);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 0.2f);
-    }
 
     // Start is called before the first frame update
     private void Start()
@@ -72,8 +63,6 @@ public class Flock : MonoBehaviour
             // Calculate agent's move
             var move = behaviour.CalculateMove(agent, contexts, this);
 
-            move *= driveFactor;
-            
             // Check if movement speed is not above maximum speed
             if (move.sqrMagnitude > _squareMaxSpeed)
             {

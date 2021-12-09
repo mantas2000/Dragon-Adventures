@@ -23,8 +23,9 @@ public class ObstaclesAvoidanceBehaviour : FlockBehaviour
         // Sum all points
         foreach (var item in context)
         {
+            // Get closest object
             var closestPoint = (Vector3) item.gameObject.GetComponent<Collider2D>().ClosestPoint(agent.transform.position);
-
+            
             if (Vector2.SqrMagnitude(closestPoint - agent.transform.position) < flock.SquareAvoidanceRadius)
             {
                 numberOfObjects++;
@@ -41,8 +42,9 @@ public class ObstaclesAvoidanceBehaviour : FlockBehaviour
         return avoidanceMove;
     }
     
-    private List<Transform> Filter(List<Transform> original, Flock flock)
+    private static List<Transform> Filter(IEnumerable<Transform> original, Flock flock)
     {
+        // Return agents that are colliding with selected layers
         return original.Where(item => flock.ObstacleLayers == (flock.ObstacleLayers | (1 << item.gameObject.layer))).ToList();
     }
 }
