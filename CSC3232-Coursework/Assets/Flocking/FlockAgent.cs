@@ -4,14 +4,13 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class FlockAgent : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer renderer;
     public Collider2D AgentCollider { get; private set; }
-    private Quaternion rotation;
 
     // Start is called before the first frame update
     private void Start()
     {
         AgentCollider = GetComponent<Collider2D>();
-        rotation = transform.rotation;
     }
 
     public void Move(Vector2 velocity)
@@ -21,10 +20,8 @@ public class FlockAgent : MonoBehaviour
         
         // Move agent
         transform.position += (Vector3) velocity * Time.deltaTime;
-    }
-
-    private void LateUpdate()
-    {
-        //transform.rotation = rotation;
+        
+        // Flip sprite
+        renderer.flipX = velocity.x < 0;
     }
 }
