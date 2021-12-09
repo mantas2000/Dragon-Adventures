@@ -3112,6 +3112,9 @@ MonoBehaviour:
   sceneSize: {x: 12, y: 4.5}
   behaviour: {fileID: 11400000, guid: e925500c00f3ecd4bb15b2d422bbc16a, type: 2}
   target: {fileID: 649841996}
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 4992
   startingCount: 20
   driveFactor: 10
   maxSpeed: 3

@@ -24,6 +24,8 @@ public class SteeredCohesionBehaviour : FlockBehaviour
         
         // Create offset from agent position
         cohesionMove -= (Vector2) agent.transform.position;
+        
+        // Smooth agent's movement
         cohesionMove = Vector2.SmoothDamp(agent.transform.up, cohesionMove, ref currentVelocity, agentSmoothTime);
 
         return cohesionMove;

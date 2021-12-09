@@ -39,14 +39,17 @@ public class Flock : MonoBehaviour
         _squareMaxSpeed = Mathf.Pow(maxSpeed, 2);
         _squareNeighbourRadius = Mathf.Pow(neighbourRadius, 2);
         _squareAvoidanceRadius = _squareNeighbourRadius * Mathf.Pow(avoidanceRadiusMultiplier, 2);
+        
+        // Define spawn area
+        var spawnArea = new Vector2(sceneSize.x - transform.position.x, sceneSize.y - transform.position.y);
 
         for (var i = 0; i < startingCount; i++)
         {
             // Create new agent
             var newAgent = Instantiate(
                 agentPrefab,
-                new Vector3(Random.Range(-sceneSize.x, sceneSize.x), Random.Range(-sceneSize.y, sceneSize.y), 0f),
-                Quaternion.Euler(Vector3.forward * Random.Range(0, 360)),
+                new Vector3(Random.Range(-spawnArea.x, spawnArea.x), Random.Range(-spawnArea.y, spawnArea.y), 0f),
+                Quaternion.identity,
                 transform
             );
             
