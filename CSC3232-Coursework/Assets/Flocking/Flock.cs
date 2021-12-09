@@ -7,6 +7,8 @@ public class Flock : MonoBehaviour
     [SerializeField] private FlockAgent agentPrefab;
     [SerializeField] private Vector2 sceneSize = new Vector2(10, 20);
     [SerializeField] private FlockBehaviour behaviour;
+    [SerializeField] private Transform target;
+    public LayerMask obstacleLayers;
     [Range(10, 500)] public int startingCount = 250;
     [Range(1f, 100f)] public float driveFactor = 10f;
     [Range(1f, 100f)] public float maxSpeed = 5f;
@@ -20,6 +22,7 @@ public class Flock : MonoBehaviour
     private float _squareAvoidanceRadius;
 
     public float SquareAvoidanceRadius => _squareAvoidanceRadius;
+    public Transform Target => target;
     
     private void OnDrawGizmosSelected()
     {
@@ -82,8 +85,6 @@ public class Flock : MonoBehaviour
 
     private List<Transform> GetNearbyObjects(FlockAgent agent)
     {
-        // Create transform list
-
         // Get all objects around agent in selected radius
         var contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighbourRadius);
 

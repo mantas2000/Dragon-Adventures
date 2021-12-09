@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597ce3ed97cb45240bf8a679075c06e4, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: 
+  filter: {fileID: 0}
   behaviours:
-  - {fileID: 11400000, guid: 5c13b5f524c23fb44b24bf0b8d4207a1, type: 2}
+  - {fileID: 11400000, guid: e45c37cd5e0704542bcdae8a1867724a, type: 2}
   - {fileID: 11400000, guid: 1f07010e1fb3ce2498c73589c7f459a5, type: 2}
   - {fileID: 11400000, guid: ab92cb1da3137d442b76d6438951641a, type: 2}
+  - {fileID: 11400000, guid: d1ffd937f97a53f45a4f6e932b5dc6fa, type: 2}
+  - {fileID: 11400000, guid: 3b658efa7f4361446897bfccc1a35ca9, type: 2}
   weights:
+  - 4
   - 1
-  - 1
-  - 5
+  - 2
+  - 0.25
+  - 100
