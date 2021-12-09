@@ -43,6 +43,6 @@ public class ObstaclesAvoidanceBehaviour : FlockBehaviour
     
     private List<Transform> Filter(List<Transform> original, Flock flock)
     {
-        return original.Where(item => flock.obstacleLayers == (flock.obstacleLayers | (1 << item.gameObject.layer))).ToList();
+        return original.Where(item => flock.ObstacleLayers == (flock.ObstacleLayers | (1 << item.gameObject.layer))).ToList();
     }
 }

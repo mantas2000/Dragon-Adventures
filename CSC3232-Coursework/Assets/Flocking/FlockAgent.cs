@@ -17,6 +17,8 @@ public class FlockAgent : MonoBehaviour
     {
         // Turn agent towards direction
         transform.up = velocity;
+        
+        // Move agent
         transform.position += (Vector3) velocity * Time.deltaTime;
     }
 }

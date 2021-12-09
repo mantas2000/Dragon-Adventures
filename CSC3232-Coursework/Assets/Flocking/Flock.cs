@@ -8,22 +8,22 @@ public class Flock : MonoBehaviour
     [SerializeField] private Vector2 sceneSize = new Vector2(10, 20);
     [SerializeField] private FlockBehaviour behaviour;
     [SerializeField] private Transform target;
-    public LayerMask obstacleLayers;
+    [SerializeField] private LayerMask obstacleLayers;
     [Range(10, 500)] public int startingCount = 250;
     [Range(1f, 100f)] public float driveFactor = 10f;
     [Range(1f, 100f)] public float maxSpeed = 5f;
     [Range(1f, 10f)] public float neighbourRadius = 1.5f;
     [Range(0f, 1f)] public float avoidanceRadiusMultiplier = 0.5f;
 
-    private List<FlockAgent> _agents = new List<FlockAgent>();
-    private const float AgentDensity = 0.08f;
+    private readonly List<FlockAgent> _agents = new List<FlockAgent>();
     private float _squareMaxSpeed;
     private float _squareNeighbourRadius;
     private float _squareAvoidanceRadius;
 
     public float SquareAvoidanceRadius => _squareAvoidanceRadius;
     public Transform Target => target;
-    
+    public LayerMask ObstacleLayers => obstacleLayers;
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
