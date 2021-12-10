@@ -1,23 +1,22 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Flock : MonoBehaviour
+public class FlockManager : MonoBehaviour
 {
     [SerializeField] private FlockAgent agentPrefab;
     [SerializeField] private Vector2 sceneSize = new Vector2(10, 20);
-    [SerializeField] private FlockBehaviour behaviour;
+    [SerializeField] private int startingCount = 20;
     [SerializeField] private Transform target;
+    [SerializeField] private FlockBehaviour behaviour;
     [SerializeField] private LayerMask obstacleLayers;
-    [SerializeField] public int startingCount = 20;
-    [Range(1f, 50f)] public float maxSpeed = 5f;
+    [Range(1f, 100f)] public float maxForce = 100f;
     [Range(1f, 10f)] public float neighbourRadius = 1.5f;
     [Range(0f, 1f)] public float avoidanceRadiusMultiplier = 0.5f;
 
     private readonly List<FlockAgent> _agents = new List<FlockAgent>();
-    private float _squareMaxSpeed;
+    private float _squareMaxForce;
     private float _squareNeighbourRadius;
     private float _squareAvoidanceRadius;
 
@@ -29,7 +28,7 @@ public class Flock : MonoBehaviour
     private void Start()
     {
         // Prepare max values
-        _squareMaxSpeed = Mathf.Pow(maxSpeed, 2);
+        _squareMaxForce = Mathf.Pow(maxForce, 2);
         _squareNeighbourRadius = Mathf.Pow(neighbourRadius, 2);
         _squareAvoidanceRadius = _squareNeighbourRadius * Mathf.Pow(avoidanceRadiusMultiplier, 2);
         
@@ -48,7 +47,7 @@ public class Flock : MonoBehaviour
             
             // Set agent's name
             newAgent.name = "Agent " + i;
-            
+
             // Add new agent to the agent's list
             _agents.Add(newAgent);
         }
@@ -66,10 +65,10 @@ public class Flock : MonoBehaviour
             var move = behaviour.CalculateMove(agent, contexts, this);
 
             // Check if movement speed is not above maximum speed
-            if (move.sqrMagnitude > _squareMaxSpeed)
+            if (move.sqrMagnitude > _squareMaxForce)
             {
                 // Normalise speed
-                move = move.normalized * maxSpeed;
+                move = move.normalized * maxForce;
             }
             
             // Move agent

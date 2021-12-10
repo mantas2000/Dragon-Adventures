@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -19,8 +18,8 @@ public class FlockAgent : MonoBehaviour
         transform.up = velocity;
         
         // Move agent
-        transform.position += (Vector3) velocity * Time.deltaTime;
-        
+        GetComponent<Rigidbody2D>().AddForce(velocity * Time.deltaTime);
+
         // Flip sprite
         renderer.flipX = velocity.x < 0;
     }

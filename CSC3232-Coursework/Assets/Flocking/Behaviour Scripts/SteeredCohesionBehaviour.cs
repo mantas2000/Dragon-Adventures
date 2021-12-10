@@ -8,7 +8,7 @@ public class SteeredCohesionBehaviour : FlockBehaviour
     [SerializeField] private float agentSmoothTime = 0.5f; 
     private Vector2 currentVelocity;
     
-    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, FlockManager flockManager)
     {
         // Abort if no neighbours is found
         if (context.Count == 0)

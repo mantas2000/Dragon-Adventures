@@ -3023,7 +3023,7 @@ GameObject:
   - component: {fileID: 2084038959}
   - component: {fileID: 2084038960}
   m_Layer: 0
-  m_Name: Flock
+  m_Name: FlockManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3057,13 +3057,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 4085380653610529216, guid: ed1d8b16a5d88f84eb06af734dad6596, type: 3}
   sceneSize: {x: 13, y: 5.5}
-  behaviour: {fileID: 11400000, guid: e925500c00f3ecd4bb15b2d422bbc16a, type: 2}
+  startingCount: 20
   target: {fileID: 649841996}
+  behaviour: {fileID: 11400000, guid: e925500c00f3ecd4bb15b2d422bbc16a, type: 2}
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 4992
-  startingCount: 20
-  maxSpeed: 3
+  maxForce: 5
   neighbourRadius: 1.5
   avoidanceRadiusMultiplier: 0.6
 --- !u!1 &2105936297

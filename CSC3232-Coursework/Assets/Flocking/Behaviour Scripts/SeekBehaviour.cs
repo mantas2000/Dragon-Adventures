@@ -4,10 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Flock/Behaviour/Seek")]
 public class SeekBehaviour : FlockBehaviour
 {
-    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, FlockManager flockManager)
     {
         // Measure distance between agent and target
-        var targetOffset = flock.Target.position - agent.transform.position;
+        var targetOffset = flockManager.Target.position - agent.transform.position;
 
         return targetOffset;
     }

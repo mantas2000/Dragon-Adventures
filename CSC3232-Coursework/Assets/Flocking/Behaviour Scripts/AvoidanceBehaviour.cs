@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Flock/Behaviour/Avoidance")]
 public class AvoidanceBehaviour : FlockBehaviour
 {
-    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, FlockManager flockManager)
     {
         // Abort if no neighbours is found
         if (context.Count == 0)
@@ -18,7 +18,7 @@ public class AvoidanceBehaviour : FlockBehaviour
         var numberOfObjects = 0;
         
         // Sum all points
-        foreach (var item in context.Where(item => Vector2.SqrMagnitude(item.position - agent.transform.position) < flock.SquareAvoidanceRadius))
+        foreach (var item in context.Where(item => Vector2.SqrMagnitude(item.position - agent.transform.position) < flockManager.SquareAvoidanceRadius))
         {
             numberOfObjects++;
             avoidanceMove += (Vector2) (agent.transform.position - item.position);

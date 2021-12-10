@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Flock/Behaviour/ObstaclesAvoidance")]
 public class ObstaclesAvoidanceBehaviour : FlockBehaviour
 {
-    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, FlockManager flockManager)
     {
         // Abort if no neighbours is found
         if (context.Count == 0)
@@ -18,7 +18,7 @@ public class ObstaclesAvoidanceBehaviour : FlockBehaviour
         var numberOfObjects = 0;
         
         // Filter
-        context = Filter(context, flock);
+        context = Filter(context, flockManager);
         
         // Sum all points
         foreach (var item in context)
@@ -26,7 +26,7 @@ public class ObstaclesAvoidanceBehaviour : FlockBehaviour
             // Get closest object
             var closestPoint = (Vector3) item.gameObject.GetComponent<Collider2D>().ClosestPoint(agent.transform.position);
             
-            if (Vector2.SqrMagnitude(closestPoint - agent.transform.position) < flock.SquareAvoidanceRadius)
+            if (Vector2.SqrMagnitude(closestPoint - agent.transform.position) < flockManager.SquareAvoidanceRadius)
             {
                 numberOfObjects++;
                 avoidanceMove += (Vector2) (agent.transform.position - item.position);
@@ -42,9 +42,9 @@ public class ObstaclesAvoidanceBehaviour : FlockBehaviour
         return avoidanceMove;
     }
     
-    private static List<Transform> Filter(IEnumerable<Transform> original, Flock flock)
+    private static List<Transform> Filter(IEnumerable<Transform> original, FlockManager flockManager)
     {
         // Return agents that are colliding with selected layers
-        return original.Where(item => flock.ObstacleLayers == (flock.ObstacleLayers | (1 << item.gameObject.layer))).ToList();
+        return original.Where(item => flockManager.ObstacleLayers == (flockManager.ObstacleLayers | (1 << item.gameObject.layer))).ToList();
     }
 }
