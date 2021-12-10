@@ -11,7 +11,7 @@ public class FlockManager : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private FlockBehaviour behaviour;
     [SerializeField] private LayerMask obstacleLayers;
-    [Range(1f, 50f)] public float maxForce = 20f;
+    public float maxForce = 20f;
     [Range(1f, 10f)] public float neighbourRadius = 1.5f;
     [Range(0f, 1f)] public float avoidanceRadiusMultiplier = 0.5f;
 
