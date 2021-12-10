@@ -11,7 +11,7 @@ public class FlockManager : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private FlockBehaviour behaviour;
     [SerializeField] private LayerMask obstacleLayers;
-    [Range(1f, 100f)] public float maxForce = 100f;
+    [Range(1f, 50f)] public float maxForce = 20f;
     [Range(1f, 10f)] public float neighbourRadius = 1.5f;
     [Range(0f, 1f)] public float avoidanceRadiusMultiplier = 0.5f;
 
@@ -44,12 +44,22 @@ public class FlockManager : MonoBehaviour
                 Quaternion.identity,
                 transform
             );
-            
-            // Set agent's name
-            newAgent.name = "Agent " + i;
 
-            // Add new agent to the agent's list
-            _agents.Add(newAgent);
+            // Confirm agent spawned in valid location (not colliding with obstacles)
+            if (VerifyLocation(newAgent))
+            {
+                // Set agent's name
+                newAgent.name = "Agent " + i;
+
+                // Add new agent to the agent's list
+                _agents.Add(newAgent);
+            }
+
+            else
+            {
+                i--;
+                Destroy(newAgent.gameObject);
+            }
         }
     }
 
@@ -63,6 +73,8 @@ public class FlockManager : MonoBehaviour
             
             // Calculate agent's move
             var move = behaviour.CalculateMove(agent, contexts, this);
+
+            move *= 20f;
 
             // Check if movement speed is not above maximum speed
             if (move.sqrMagnitude > _squareMaxForce)
@@ -83,5 +95,11 @@ public class FlockManager : MonoBehaviour
 
         // Return all objects what are not associated with the agent
         return (from collider in contextColliders where collider != agent.AgentCollider select collider.transform).ToList();
+    }
+
+    private bool VerifyLocation(FlockAgent agent)
+    {
+        // Return true if agent is not colliding with ground layer
+        return GetNearbyObjects(agent).All(agentCollider => agentCollider.gameObject.layer != 7);
     }
 }
