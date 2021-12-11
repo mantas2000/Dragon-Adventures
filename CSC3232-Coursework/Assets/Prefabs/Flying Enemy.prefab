@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1faefe4a4193029448f76049edb03cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 181518922956832403, guid: ce10016ddfa64724f911737ded84705e, type: 3}
   controller: {fileID: 181518922956832410, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-  playerAnimator: {fileID: 181518922956832411, guid: ce10016ddfa64724f911737ded84705e, type: 3}
   gemCollecting: {fileID: 0}
+  isAttacking: 1

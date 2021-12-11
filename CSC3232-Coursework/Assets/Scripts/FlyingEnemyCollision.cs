@@ -3,10 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class FlyingEnemyCollision : MonoBehaviour
 {
-[SerializeField] private CharacterController2D controller;
-    [SerializeField] private Animator playerAnimator;
     [SerializeField] private GemCollecting gemCollecting;
+    [SerializeField] private bool isAttacking;
+    private GameObject player;
+    private Animator playerAnimator;
+    private CharacterController2D controller;
     private bool _isColliding;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerAnimator = player.GetComponent<Animator>();
+        controller = player.GetComponent<CharacterController2D>();
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -27,7 +36,7 @@ public class FlyingEnemyCollision : MonoBehaviour
             PlayerPrefs.SetInt("TotalKills", totalKills + 1);
             
             gameObject.SetActive(false);
-            gemCollecting.EnemyDefeated();
+            if (isAttacking) gemCollecting.EnemyDefeated();
         }
             
         // Player performs Duck Move
@@ -41,7 +50,7 @@ public class FlyingEnemyCollision : MonoBehaviour
             PlayerPrefs.SetInt("TotalKills", totalKills + 1);
             
             gameObject.SetActive(false);
-            gemCollecting.EnemyDefeated();
+            if (isAttacking) gemCollecting.EnemyDefeated();
         }
         
         // Player is attacking (Super Jump or Wall Jump)
@@ -55,11 +64,11 @@ public class FlyingEnemyCollision : MonoBehaviour
             PlayerPrefs.SetInt("TotalKills", totalKills + 1);
             
             gameObject.SetActive(false);
-            gemCollecting.EnemyDefeated();
+            if (isAttacking) gemCollecting.EnemyDefeated();
         }
 
         // Otherwise, player dies, restart level
-        else
+        else if (isAttacking)
         {
             // Play player's death sound
             FindObjectOfType<AudioManager>().Play("PlayerDeath");
