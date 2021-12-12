@@ -9,10 +9,8 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI dialogueText;
 	[SerializeField] private FighterInfo playerInfo;
 	[SerializeField] private FighterInfo enemyInfo;
-
-	public BattleHUD playerHUD;
-	public BattleHUD enemyHUD;
-
+	[SerializeField] private BattleHUD _playerHUD;
+	[SerializeField] private BattleHUD _enemyHUD;
 	public BattleState state;
 
     // Start is called before the first frame update
@@ -26,8 +24,8 @@ public class BattleManager : MonoBehaviour
 	{
 		dialogueText.text = "A wild " + enemyInfo.fighterName + " approaches...";
 
-		playerHUD.SetHUD(playerInfo);
-		enemyHUD.SetHUD(enemyInfo);
+		_playerHUD.SetHUD(playerInfo);
+		_enemyHUD.SetHUD(enemyInfo);
 
 		yield return new WaitForSeconds(2f);
 
@@ -39,7 +37,7 @@ public class BattleManager : MonoBehaviour
 	{
 		var isDead = enemyInfo.TakeDamage(playerInfo.damage);
 
-		enemyHUD.SetHP(enemyInfo.currentHP);
+		_enemyHUD.SetHP(enemyInfo.currentHP);
 		dialogueText.text = "The attack is successful!";
 
 		yield return new WaitForSeconds(2f);
@@ -63,7 +61,7 @@ public class BattleManager : MonoBehaviour
 
 		var isDead = playerInfo.TakeDamage(enemyInfo.damage);
 
-		playerHUD.SetHP(playerInfo.currentHP);
+		_playerHUD.SetHP(playerInfo.currentHP);
 
 		yield return new WaitForSeconds(1f);
 
@@ -98,7 +96,7 @@ public class BattleManager : MonoBehaviour
 	{
 		playerInfo.Heal(5);
 
-		playerHUD.SetHP(playerInfo.currentHP);
+		_playerHUD.SetHP(playerInfo.currentHP);
 		dialogueText.text = "You feel renewed strength!";
 
 		yield return new WaitForSeconds(2f);
@@ -122,5 +120,4 @@ public class BattleManager : MonoBehaviour
 
 		StartCoroutine(PlayerHeal());
 	}
-
 }

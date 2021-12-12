@@ -680,7 +680,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522326764}
   m_Layer: 5
-  m_Name: Player Moves
+  m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2489,8 +2489,6 @@ MonoBehaviour:
   dialogueText: {fileID: 1273656700}
   playerInfo: {fileID: 109741677}
   enemyInfo: {fileID: 1924487417}
-  playerHUD: {fileID: 639847121}
-  enemyHUD: {fileID: 141156109}
   state: 0
 --- !u!1 &1530575697
 GameObject:
