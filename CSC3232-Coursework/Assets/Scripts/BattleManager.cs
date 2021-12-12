@@ -32,6 +32,28 @@ public class BattleManager : MonoBehaviour
 		state = BattleState.PlayerTurn;
 		PlayerTurn();
 	}
+    
+    private void EnemyTurn()
+    {
+	    var enemyMove = (Random.value < 0.5);
+
+	    StartCoroutine(enemyMove ? EnemyAttack() : EnemyHeal());
+    }
+    
+    private void PlayerTurn()
+    {
+	    dialogueText.text = "Choose an action:";
+    }
+
+    private void EndBattle()
+    {
+	    dialogueText.text = state switch
+	    {
+		    BattleState.Won => "You won the battle!",
+		    BattleState.Lost => "You were defeated.",
+		    _ => dialogueText.text
+	    };
+    }
 
     private IEnumerator PlayerAttack()
 	{
@@ -46,51 +68,37 @@ public class BattleManager : MonoBehaviour
 		{
 			state = BattleState.Won;
 			EndBattle();
-		} else
+		} 
+		else
 		{
 			state = BattleState.EnemyTurn;
-			StartCoroutine(EnemyTurn());
+			EnemyTurn();
 		}
 	}
-
-    private IEnumerator EnemyTurn()
-	{
-		dialogueText.text = enemyInfo.fighterName + " attacks!";
-
-		yield return new WaitForSeconds(1f);
-
-		var isDead = playerInfo.TakeDamage(enemyInfo.damage);
-
-		_playerHUD.SetHP(playerInfo.currentHP);
-
-		yield return new WaitForSeconds(1f);
-
-		if(isDead)
-		{
-			state = BattleState.Lost;
-			EndBattle();
-		} else
-		{
-			state = BattleState.PlayerTurn;
-			PlayerTurn();
-		}
-
-	}
-
-    private void EndBattle()
+    
+    private IEnumerator EnemyAttack()
     {
-	    dialogueText.text = state switch
-	    {
-		    BattleState.Won => "You won the battle!",
-		    BattleState.Lost => "You were defeated.",
-		    _ => dialogueText.text
-	    };
-    }
+	    dialogueText.text = enemyInfo.fighterName + " attacks!";
 
-    private void PlayerTurn()
-	{
-		dialogueText.text = "Choose an action:";
-	}
+	    yield return new WaitForSeconds(1f);
+
+	    var isDead = playerInfo.TakeDamage(enemyInfo.damage);
+
+	    _playerHUD.SetHP(playerInfo.currentHP);
+
+	    yield return new WaitForSeconds(1f);
+
+	    if(isDead)
+	    {
+		    state = BattleState.Lost;
+		    EndBattle();
+	    } 
+	    else
+	    {
+		    state = BattleState.PlayerTurn;
+		    PlayerTurn();
+	    }
+    }
 
     private IEnumerator PlayerHeal()
 	{
@@ -102,8 +110,21 @@ public class BattleManager : MonoBehaviour
 		yield return new WaitForSeconds(2f);
 
 		state = BattleState.EnemyTurn;
-		StartCoroutine(EnemyTurn());
+		EnemyTurn();
 	}
+    
+    private IEnumerator EnemyHeal()
+    {
+	    enemyInfo.Heal(5);
+
+	    _enemyHUD.SetHP(enemyInfo.currentHP);
+	    dialogueText.text = enemyInfo.fighterName + " heals.";
+
+	    yield return new WaitForSeconds(1f);
+	    
+	    state = BattleState.PlayerTurn;
+	    PlayerTurn();
+    }
 
 	public void OnAttackButton()
 	{
