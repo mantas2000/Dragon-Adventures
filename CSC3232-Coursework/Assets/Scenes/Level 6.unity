@@ -2487,8 +2487,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 1273656700}
-  playerFighterInfo: {fileID: 109741677}
-  enemyFighterInfo: {fileID: 1924487417}
+  playerInfo: {fileID: 109741677}
+  enemyInfo: {fileID: 1924487417}
   playerHUD: {fileID: 639847121}
   enemyHUD: {fileID: 141156109}
   state: 0

@@ -2,13 +2,13 @@
 using TMPro;
 using UnityEngine;
 
-public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
+public enum BattleState {Start, PlayerTurn, EnemyTurn, Won, Lost}
 
 public class BattleManager : MonoBehaviour
 {
 	[SerializeField] private TextMeshProUGUI dialogueText;
-	[SerializeField] private FighterInfo playerFighterInfo;
-	[SerializeField] private FighterInfo enemyFighterInfo;
+	[SerializeField] private FighterInfo playerInfo;
+	[SerializeField] private FighterInfo enemyInfo;
 
 	public BattleHUD playerHUD;
 	public BattleHUD enemyHUD;
@@ -18,77 +18,76 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-		state = BattleState.START;
+		state = BattleState.Start;
 		StartCoroutine(SetupBattle());
     }
 
     private IEnumerator SetupBattle()
 	{
-		dialogueText.text = "A wild " + enemyFighterInfo.fighterName + " approaches...";
+		dialogueText.text = "A wild " + enemyInfo.fighterName + " approaches...";
 
-		playerHUD.SetHUD(playerFighterInfo);
-		enemyHUD.SetHUD(enemyFighterInfo);
+		playerHUD.SetHUD(playerInfo);
+		enemyHUD.SetHUD(enemyInfo);
 
 		yield return new WaitForSeconds(2f);
 
-		state = BattleState.PLAYERTURN;
+		state = BattleState.PlayerTurn;
 		PlayerTurn();
 	}
 
     private IEnumerator PlayerAttack()
 	{
-		bool isDead = enemyFighterInfo.TakeDamage(playerFighterInfo.damage);
+		var isDead = enemyInfo.TakeDamage(playerInfo.damage);
 
-		enemyHUD.SetHP(enemyFighterInfo.currentHP);
+		enemyHUD.SetHP(enemyInfo.currentHP);
 		dialogueText.text = "The attack is successful!";
 
 		yield return new WaitForSeconds(2f);
 
 		if(isDead)
 		{
-			state = BattleState.WON;
+			state = BattleState.Won;
 			EndBattle();
 		} else
 		{
-			state = BattleState.ENEMYTURN;
+			state = BattleState.EnemyTurn;
 			StartCoroutine(EnemyTurn());
 		}
 	}
 
     private IEnumerator EnemyTurn()
 	{
-		dialogueText.text = enemyFighterInfo.fighterName + " attacks!";
+		dialogueText.text = enemyInfo.fighterName + " attacks!";
 
 		yield return new WaitForSeconds(1f);
 
-		bool isDead = playerFighterInfo.TakeDamage(enemyFighterInfo.damage);
+		var isDead = playerInfo.TakeDamage(enemyInfo.damage);
 
-		playerHUD.SetHP(playerFighterInfo.currentHP);
+		playerHUD.SetHP(playerInfo.currentHP);
 
 		yield return new WaitForSeconds(1f);
 
 		if(isDead)
 		{
-			state = BattleState.LOST;
+			state = BattleState.Lost;
 			EndBattle();
 		} else
 		{
-			state = BattleState.PLAYERTURN;
+			state = BattleState.PlayerTurn;
 			PlayerTurn();
 		}
 
 	}
 
     private void EndBattle()
-	{
-		if(state == BattleState.WON)
-		{
-			dialogueText.text = "You won the battle!";
-		} else if (state == BattleState.LOST)
-		{
-			dialogueText.text = "You were defeated.";
-		}
-	}
+    {
+	    dialogueText.text = state switch
+	    {
+		    BattleState.Won => "You won the battle!",
+		    BattleState.Lost => "You were defeated.",
+		    _ => dialogueText.text
+	    };
+    }
 
     private void PlayerTurn()
 	{
@@ -97,30 +96,28 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator PlayerHeal()
 	{
-		playerFighterInfo.Heal(5);
+		playerInfo.Heal(5);
 
-		playerHUD.SetHP(playerFighterInfo.currentHP);
+		playerHUD.SetHP(playerInfo.currentHP);
 		dialogueText.text = "You feel renewed strength!";
 
 		yield return new WaitForSeconds(2f);
 
-		state = BattleState.ENEMYTURN;
+		state = BattleState.EnemyTurn;
 		StartCoroutine(EnemyTurn());
 	}
 
 	public void OnAttackButton()
 	{
-		if (state != BattleState.PLAYERTURN)
+		if (state != BattleState.PlayerTurn)
 			return;
-		
-		Debug.Log("ATTACK");
 
 		StartCoroutine(PlayerAttack());
 	}
 
 	public void OnHealButton()
 	{
-		if (state != BattleState.PLAYERTURN)
+		if (state != BattleState.PlayerTurn)
 			return;
 
 		StartCoroutine(PlayerHeal());
