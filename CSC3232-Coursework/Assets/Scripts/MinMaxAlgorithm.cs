@@ -75,21 +75,25 @@ public class MinMaxAlgorithm : MonoBehaviour
     
     public void UpdateLifeBar(int playerHp, int opponentHp)
     {
-        // Increase/Decrease health for player
+        // Increase health for player
         if (playerHp > 0)
         {
             cgs.playerLifeBar = new TreeBasedPlayerConf(Math.Min(cgs.playerLifeBar.getScore() + playerHp, playerInfo.maxHP), true);
         }
+        
+        // Decrease health for player
         else if (playerHp < 0)
         {
             cgs.playerLifeBar = new TreeBasedPlayerConf(Math.Max(cgs.playerLifeBar.getScore() + playerHp, 0), true);
         }
         
-        // Increase/Decrease health for opponent
+        // Increase health for opponent
         if (opponentHp > 0)
         {
             cgs.opponentLifeBar = new TreeBasedPlayerConf(Math.Min(cgs.opponentLifeBar.getScore() + opponentHp, opponentInfo.maxHP), true);
         }
+        
+        // Decrease health for opponent
         else if (opponentHp < 0)
         {
             cgs.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(cgs.opponentLifeBar.getScore() + opponentHp, 0), true);
