@@ -10,23 +10,17 @@ public class MinMaxAlgorithm : MonoBehaviour
     [SerializeField] private BattleManager bm;
     [SerializeField] private FighterInfo playerInfo;
     [SerializeField] private FighterInfo opponentInfo;
-    MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf> conf;
-    NTree<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState> tree;
-    MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState cgs;
+    private MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf> conf;
+    private NTree<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState> tree;
+    private MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState cgs;
     
     public void Start()
     {
-        // The player can perform two different actions:
-        // - TurboPunch: gives the opponent a damage of 0.5
-        // - MiniPunch:  gives the opponent a damage of 0.2
-        HashSet<string> actionsPlayer = new HashSet<string>();
-        actionsPlayer.Add("Attack");
-        actionsPlayer.Add("Heal");
+        // The player can perform three different actions:
+        var actionsPlayer = new HashSet<string> {"Attack", "Heal"};
 
-        // The NPC can only perform 0.3 damage at a time
-        HashSet<string> actionsNPC = new HashSet<string>();
-        actionsNPC.Add("Attack");
-        actionsNPC.Add("Heal");
+        // The NPC can also perform 3 damage different actions
+        var actionsNPC = new HashSet<string> {"Attack", "Heal"};
 
         // Initialization of the minmax algorithm
         cgs = new MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState();
@@ -79,15 +73,27 @@ public class MinMaxAlgorithm : MonoBehaviour
         return tree.data.action.getBestAction();
     }
     
-    public void UpdateLifeBar(double playerHP, double opponentHP)
+    public void UpdateLifeBar(int playerHp, int opponentHp)
     {
         // Increase/Decrease health for player
-        cgs.playerLifeBar = new TreeBasedPlayerConf(cgs.playerLifeBar.getScore() + playerHP, true);
-        if (cgs.playerLifeBar.getScore() > playerInfo.maxHP) cgs.playerLifeBar = new TreeBasedPlayerConf(playerInfo.maxHP, true);
+        if (playerHp > 0)
+        {
+            cgs.playerLifeBar = new TreeBasedPlayerConf(Math.Min(cgs.playerLifeBar.getScore() + playerHp, playerInfo.maxHP), true);
+        }
+        else if (playerHp < 0)
+        {
+            cgs.playerLifeBar = new TreeBasedPlayerConf(Math.Max(cgs.playerLifeBar.getScore() + playerHp, 0), true);
+        }
         
         // Increase/Decrease health for opponent
-        cgs.opponentLifeBar = new TreeBasedPlayerConf(cgs.opponentLifeBar.getScore() + opponentHP, true);
-        if (cgs.opponentLifeBar.getScore() > opponentInfo.maxHP) cgs.opponentLifeBar = new TreeBasedPlayerConf(opponentInfo.maxHP, true);
+        if (opponentHp > 0)
+        {
+            cgs.opponentLifeBar = new TreeBasedPlayerConf(Math.Min(cgs.opponentLifeBar.getScore() + opponentHp, opponentInfo.maxHP), true);
+        }
+        else if (opponentHp < 0)
+        {
+            cgs.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(cgs.opponentLifeBar.getScore() + opponentHp, 0), true);
+        }
         
         Debug.Log("PLAYER HEALTH: " + cgs.playerLifeBar.getScore());
         Debug.Log("ENEMY HEALTH: " + cgs.opponentLifeBar.getScore());
