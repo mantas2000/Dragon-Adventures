@@ -3308,6 +3308,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bm: {fileID: 1509439000}
+  playerInfo: {fileID: 109741677}
+  opponentInfo: {fileID: 1924487417}
 --- !u!1 &1924487414
 GameObject:
   m_ObjectHideFlags: 0

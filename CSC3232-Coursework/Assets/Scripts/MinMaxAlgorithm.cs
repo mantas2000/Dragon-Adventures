@@ -8,6 +8,8 @@ using MinMaxProjects.tests;
 public class MinMaxAlgorithm : MonoBehaviour
 {
     [SerializeField] private BattleManager bm;
+    [SerializeField] private FighterInfo playerInfo;
+    [SerializeField] private FighterInfo opponentInfo;
     MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf> conf;
     NTree<MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState> tree;
     MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState cgs;
@@ -31,8 +33,8 @@ public class MinMaxAlgorithm : MonoBehaviour
         // Setting some parameters out of the constructor, so to provide a better comment section...
         var initConf = new TreeBasedGameConfiguration<string>(); // initial state of the tree game
         cgs.gameConfiguration = initConf;                // initial board configuration
-        cgs.opponentLifeBar = new TreeBasedPlayerConf(10, true); // normalized life bar
-        cgs.playerLifeBar = new TreeBasedPlayerConf(10, true);   // normalized life bar
+        cgs.opponentLifeBar = new TreeBasedPlayerConf(playerInfo.currentHP, true); // normalized life bar
+        cgs.playerLifeBar = new TreeBasedPlayerConf(opponentInfo.currentHP, true);   // normalized life bar
         cgs.isPlayerTurn = false;                        // starting with max
         cgs.parentAction = "";                           // the root node has NO parent action, represented as an empty string!
 
@@ -81,11 +83,11 @@ public class MinMaxAlgorithm : MonoBehaviour
     {
         // Increase/Decrease health for player
         cgs.playerLifeBar = new TreeBasedPlayerConf(cgs.playerLifeBar.getScore() + playerHP, true);
-        if (cgs.playerLifeBar.getScore() > 10) cgs.playerLifeBar = new TreeBasedPlayerConf(10, true);
+        if (cgs.playerLifeBar.getScore() > playerInfo.maxHP) cgs.playerLifeBar = new TreeBasedPlayerConf(playerInfo.maxHP, true);
         
         // Increase/Decrease health for opponent
         cgs.opponentLifeBar = new TreeBasedPlayerConf(cgs.opponentLifeBar.getScore() + opponentHP, true);
-        if (cgs.opponentLifeBar.getScore() > 10) cgs.opponentLifeBar = new TreeBasedPlayerConf(10, true);
+        if (cgs.opponentLifeBar.getScore() > opponentInfo.maxHP) cgs.opponentLifeBar = new TreeBasedPlayerConf(opponentInfo.maxHP, true);
         
         Debug.Log("PLAYER HEALTH: " + cgs.playerLifeBar.getScore());
         Debug.Log("ENEMY HEALTH: " + cgs.opponentLifeBar.getScore());
