@@ -11,6 +11,11 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] private FighterInfo enemyInfo;
 	[SerializeField] private BattleHUD _playerHUD;
 	[SerializeField] private BattleHUD _enemyHUD;
+	[SerializeField] private MinMaxAlgorithm _minMax;
+	public int playerAttackAmount = 3;
+	public int playerHealAmount = 2;
+	public int enemyAttackAmount = 2;
+	public int enemyHealAmount = 5;
 	public BattleState state;
 
     // Start is called before the first frame update
@@ -35,9 +40,18 @@ public class BattleManager : MonoBehaviour
     
     private void EnemyTurn()
     {
-	    var enemyMove = (Random.value < 0.5);
+	    var bestAction = _minMax.BestAction();
+	    Debug.Log(bestAction);
 
-	    StartCoroutine(enemyMove ? EnemyAttack() : EnemyHeal());
+	    switch (bestAction)
+	    {
+		    case "Attack":
+			    StartCoroutine(EnemyAttack());
+			    break;
+		    case "Heal":
+			    StartCoroutine(EnemyHeal());
+			    break;
+	    }
     }
     
     private void PlayerTurn()
@@ -57,7 +71,8 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator PlayerAttack()
 	{
-		var isDead = enemyInfo.TakeDamage(playerInfo.damage);
+		var isDead = enemyInfo.TakeDamage(playerAttackAmount);
+		_minMax.UpdateLifeBar(0, -playerAttackAmount);
 
 		_enemyHUD.SetHP(enemyInfo.currentHP);
 		dialogueText.text = "The attack is successful!";
@@ -79,10 +94,11 @@ public class BattleManager : MonoBehaviour
     private IEnumerator EnemyAttack()
     {
 	    dialogueText.text = enemyInfo.fighterName + " attacks!";
+	    _minMax.UpdateLifeBar(-enemyAttackAmount, 0);
 
 	    yield return new WaitForSeconds(1f);
 
-	    var isDead = playerInfo.TakeDamage(enemyInfo.damage);
+	    var isDead = playerInfo.TakeDamage(enemyAttackAmount);
 
 	    _playerHUD.SetHP(playerInfo.currentHP);
 
@@ -102,7 +118,8 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator PlayerHeal()
 	{
-		playerInfo.Heal(5);
+		playerInfo.Heal(playerHealAmount);
+		_minMax.UpdateLifeBar(playerHealAmount, 0);
 
 		_playerHUD.SetHP(playerInfo.currentHP);
 		dialogueText.text = "You feel renewed strength!";
@@ -115,7 +132,8 @@ public class BattleManager : MonoBehaviour
     
     private IEnumerator EnemyHeal()
     {
-	    enemyInfo.Heal(5);
+	    enemyInfo.Heal(enemyHealAmount);
+	    _minMax.UpdateLifeBar(0, enemyHealAmount);
 
 	    _enemyHUD.SetHP(enemyInfo.currentHP);
 	    dialogueText.text = enemyInfo.fighterName + " heals.";

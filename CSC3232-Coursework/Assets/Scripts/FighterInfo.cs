@@ -4,7 +4,6 @@ public class FighterInfo : MonoBehaviour
 {
 
 	public string fighterName;
-	public int damage;
 	public int maxHP;
 	public int currentHP;
 

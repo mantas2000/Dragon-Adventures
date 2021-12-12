@@ -397,8 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fighterName: Dragon
-  damage: 3
-  maxHP: 13
+  maxHP: 10
   currentHP: 10
 --- !u!1 &141156107
 GameObject:
@@ -452,7 +451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36616fc90507ed419289ae37266212f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 1668123545}
   hpSlider: {fileID: 1335901370}
 --- !u!114 &141156110
 MonoBehaviour:
@@ -793,7 +791,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.699
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1010,7 +1008,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36616fc90507ed419289ae37266212f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 834394671}
   hpSlider: {fileID: 535753008}
 --- !u!114 &639847122
 MonoBehaviour:
@@ -2305,7 +2302,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.699
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2489,6 +2486,13 @@ MonoBehaviour:
   dialogueText: {fileID: 1273656700}
   playerInfo: {fileID: 109741677}
   enemyInfo: {fileID: 1924487417}
+  _playerHUD: {fileID: 639847121}
+  _enemyHUD: {fileID: 141156109}
+  _minMax: {fileID: 1760778677}
+  playerAttackAmount: 3
+  playerHealAmount: 2
+  enemyAttackAmount: 2
+  enemyHealAmount: 5
   state: 0
 --- !u!1 &1530575697
 GameObject:
@@ -3274,7 +3278,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1760778676
 Transform:
   m_ObjectHideFlags: 0
@@ -3298,9 +3302,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1760778675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a49ae2f76a48cf4a9e8635aa7cb9cef, type: 3}
+  m_Script: {fileID: 11500000, guid: 8249623f0d5fe484781fc0458b25296e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bm: {fileID: 1509439000}
 --- !u!1 &1924487414
 GameObject:
   m_ObjectHideFlags: 0
@@ -3398,8 +3403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fighterName: Enemy
-  damage: 3
-  maxHP: 13
+  maxHP: 10
   currentHP: 10
 --- !u!1 &1998475259
 GameObject:
