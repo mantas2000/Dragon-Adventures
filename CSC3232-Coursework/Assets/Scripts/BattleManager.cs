@@ -45,6 +45,7 @@ public class BattleManager : MonoBehaviour
 	{
 		dialogueText.text = "A wild " + enemyInfo.fighterName + " approaches...";
 
+		// Set up fighter HUD
 		_playerHUD.SetHUD(playerInfo);
 		_enemyHUD.SetHUD(enemyInfo);
 
@@ -56,9 +57,11 @@ public class BattleManager : MonoBehaviour
     
     private void EnemyTurn()
     {
+	    // Get best possible action using MinMax Algorithm
 	    var bestAction = _minMax.BestAction();
 	    Debug.Log(bestAction);
-
+	    
+	    // Start attack
 	    switch (bestAction)
 	    {
 		    case "Kick":
@@ -75,7 +78,7 @@ public class BattleManager : MonoBehaviour
 	    dialogueText.text = "Choose an action:";
     }
 
-    private void EndBattle()
+    private IEnumerator EndBattle()
     {
 	    dialogueText.text = state switch
 	    {
@@ -84,6 +87,24 @@ public class BattleManager : MonoBehaviour
 		    BattleState.Tie => "Both fighters have died.",
 		    _ => dialogueText.text
 	    };
+	    
+	    yield return new WaitForSeconds(2f);
+
+	    switch (state)
+	    {
+		    case BattleState.Lost:
+			    // Restart level
+			    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			    break;
+		    case BattleState.Tie:
+			    // Restart level
+			    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			    break;
+		    case BattleState.Won:
+			    // Exit level
+			    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex != 1 ? "Overworld" : "Menu");
+			    break;
+	    }
     }
 
     private IEnumerator Move(IReadOnlyList<int> damage, FighterInfo fighterInfo, bool isPlayer, string message)
@@ -104,21 +125,21 @@ public class BattleManager : MonoBehaviour
 	    if (_minMax.GetPlayerLifeBar() == 0 && _minMax.GetOpponentLifeBar() == 0)
 	    {
 		    state = BattleState.Tie;
-		    EndBattle();
+		    StartCoroutine(EndBattle());
 	    }
 	    
 	    // Enemy have died (WON)
 	    else if (_minMax.GetPlayerLifeBar() > 0 && _minMax.GetOpponentLifeBar() == 0)
 	    {
 		    state = BattleState.Won;
-		    EndBattle();
+		    StartCoroutine(EndBattle());
 	    }
 	    
 	    // Player have died (LOST)
 	    else if (_minMax.GetPlayerLifeBar() == 0 && _minMax.GetOpponentLifeBar() > 0)
 	    {
 		    state = BattleState.Lost;
-		    EndBattle();
+		    StartCoroutine(EndBattle());
 	    }
 	    
 	    // Fight continues
@@ -142,17 +163,21 @@ public class BattleManager : MonoBehaviour
 
 	public void OnBiteButton()
 	{
+		// Make sure it's player's turn
 		if (state != BattleState.PlayerTurn)
 			return;
-
+		
+		// Start attack
 		StartCoroutine(Move(playerBiteDamage, playerInfo, true, " bites."));
 	}
 
 	public void OnFireAttackButton()
 	{
+		// Make sure it's player's turn
 		if (state != BattleState.PlayerTurn)
 			return;
-
+		
+		// Start attack
 		StartCoroutine(Move(playerFireAttackDamage, playerInfo, true, " fire attacks."));
 	}
 }
