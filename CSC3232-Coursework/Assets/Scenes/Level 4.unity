@@ -381,7 +381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -534, y: 55}
+  m_AnchoredPosition: {x: -537, y: 50}
   m_SizeDelta: {x: 369.79, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &304588566
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BE CAREFUL! ENEMY INCOMING!
+  m_text: BE CAREFUL, ENEMY INCOMING!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f9c4b7ca6488b341882e8693aff1b76, type: 2}
   m_sharedMaterial: {fileID: 7514990378510377523, guid: 0f9c4b7ca6488b341882e8693aff1b76, type: 2}
