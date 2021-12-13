@@ -80,14 +80,23 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator EndBattle()
     {
-	    dialogueText.text = state switch
+	    // Display outcome of the battle
+	    switch (state)
 	    {
-		    BattleState.Won => "You won the battle!",
-		    BattleState.Lost => "You were defeated.",
-		    BattleState.Tie => "Both fighters have died.",
-		    _ => dialogueText.text
-	    };
-	    
+		    case BattleState.Lost:
+			    dialogueText.text = "You were defeated.";
+			    FindObjectOfType<AudioManager>().Play("PlayerDeath");
+			    break;
+		    case BattleState.Tie:
+			    dialogueText.text = "Both fighters have died.";
+			    FindObjectOfType<AudioManager>().Play("PlayerDeath");
+			    break;
+		    case BattleState.Won:
+			    dialogueText.text = "You won the battle!";
+			    FindObjectOfType<AudioManager>().Play("LevelCompleted");
+			    break;
+	    }
+
 	    yield return new WaitForSeconds(2f);
 
 	    switch (state)
@@ -111,6 +120,9 @@ public class BattleManager : MonoBehaviour
     {
 	    // Display attack info
 	    dialogueText.text = fighterInfo.fighterName +  message;
+	    
+	    // Play hit sound
+	    FindObjectOfType<AudioManager>().Play("Hit");
 
 	    // Pass damage amount to MinMax algorithm
 	    _minMax.UpdateLifeBar(damage[0], damage[1]);
