@@ -93,10 +93,6 @@ public class MinMaxAlgorithm : MonoBehaviour
 
         // Decrease health for opponent
         cgs.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(cgs.opponentLifeBar.getScore() - opponentHp, 0), true);
-
-        Debug.Log("PLAYER HEALTH: " + cgs.playerLifeBar.getScore());
-        Debug.Log("ENEMY HEALTH: " + cgs.opponentLifeBar.getScore());
-        Debug.Log("-----------------------------------");
     }
 
     public int GetPlayerLifeBar()

@@ -59,8 +59,7 @@ public class BattleManager : MonoBehaviour
     {
 	    // Get best possible action using MinMax Algorithm
 	    var bestAction = _minMax.BestAction();
-	    Debug.Log(bestAction);
-	    
+
 	    // Start attack
 	    switch (bestAction)
 	    {
