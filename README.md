@@ -29,3 +29,6 @@
 ● In this project, I followed appropriate design patterns and game structure rules. That includes using prefabs in the scenes, clean & commented code structure, well structured game design and quality of features implementation.
 
 ● Implementation of advanced gameplay progression techniques can be seen in Level 6. In this level, I decided to make a mini turn-based game. For this reason, I am using Min/Max algorithm to find the best possible move for the enemy in order to beat the player. Battle between the player and the final boss are controlled by the managing states. This helps to manage the flow and rules of the battle and have a clear outcome of the fight.
+
+<h2>Unity Assets used in this project:</h2>
+● https://assetstore.unity.com/packages/2d/environments/stomper-platform-assets-195244
