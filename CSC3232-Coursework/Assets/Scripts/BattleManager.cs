@@ -189,6 +189,6 @@ public class BattleManager : MonoBehaviour
 			return;
 		
 		// Start attack
-		StartCoroutine(Move(playerFireAttackDamage, playerInfo, true, " fire attacks."));
+		StartCoroutine(Move(playerFireAttackDamage, playerInfo, true, " attacks with fire."));
 	}
 }
