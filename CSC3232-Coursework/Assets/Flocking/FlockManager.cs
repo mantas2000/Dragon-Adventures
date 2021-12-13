@@ -99,7 +99,12 @@ public class FlockManager : MonoBehaviour
 
     private bool VerifyLocation(FlockAgent agent)
     {
-        // Return true if agent is not colliding with ground layer
-        return GetNearbyObjects(agent).All(agentCollider => agentCollider.gameObject.layer != 7);
+        // True, if agent is not colliding with ground layer
+        var touchingGround =  GetNearbyObjects(agent).All(agentCollider => agentCollider.gameObject.layer != 7);
+        
+        // True, if agent is not colliding with bridge layer
+        var touchingBridge =  GetNearbyObjects(agent).All(agentCollider => agentCollider.gameObject.layer != 8);
+
+        return touchingGround && touchingBridge;
     }
 }
