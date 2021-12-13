@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public enum BattleState {Start, PlayerTurn, EnemyTurn, Won, Lost}
+public enum BattleState {Start, PlayerTurn, EnemyTurn, Won, Lost, Tie}
 
 public class BattleManager : MonoBehaviour
 {
@@ -12,10 +13,10 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] private BattleHUD _playerHUD;
 	[SerializeField] private BattleHUD _enemyHUD;
 	[SerializeField] private MinMaxAlgorithm _minMax;
-	public int playerAttackAmount = 3;
-	public int playerHealAmount = 2;
-	public int enemyAttackAmount = 2;
-	public int enemyHealAmount = 5;
+	public List<int> playerBiteDamage = new List<int>() {0, 2};
+	public List<int> playerFireAttackDamage = new List<int>() {1, 4};
+	public List<int> enemyKickDamage = new List<int>() {3, 0};
+	public List<int> enemyMagicSpellDamage = new List<int>() {5, 2};
 	public BattleState state;
 
     // Start is called before the first frame update
@@ -45,11 +46,11 @@ public class BattleManager : MonoBehaviour
 
 	    switch (bestAction)
 	    {
-		    case "Attack":
-			    StartCoroutine(EnemyAttack());
+		    case "Kick":
+			    StartCoroutine(Move(enemyKickDamage, enemyInfo, false, " kicks."));
 			    break;
-		    case "Heal":
-			    StartCoroutine(EnemyHeal());
+		    case "Magic Spell":
+			    StartCoroutine(Move(enemyMagicSpellDamage, enemyInfo, false, " deploys magic spell!"));
 			    break;
 	    }
     }
@@ -65,98 +66,78 @@ public class BattleManager : MonoBehaviour
 	    {
 		    BattleState.Won => "You won the battle!",
 		    BattleState.Lost => "You were defeated.",
+		    BattleState.Tie => "Both fighters have died.",
 		    _ => dialogueText.text
 	    };
     }
 
-    private IEnumerator PlayerAttack()
-	{
-		var isDead = enemyInfo.TakeDamage(playerAttackAmount);
-		_minMax.UpdateLifeBar(0, -playerAttackAmount);
-
-		_enemyHUD.SetHP(enemyInfo.currentHP);
-		dialogueText.text = "The attack is successful!";
-
-		yield return new WaitForSeconds(2f);
-
-		if(isDead)
-		{
-			state = BattleState.Won;
-			EndBattle();
-		} 
-		else
-		{
-			state = BattleState.EnemyTurn;
-			EnemyTurn();
-		}
-	}
-    
-    private IEnumerator EnemyAttack()
+    private IEnumerator Move(IReadOnlyList<int> damage, FighterInfo fighterInfo, bool isPlayer, string message)
     {
-	    dialogueText.text = enemyInfo.fighterName + " attacks!";
-	    _minMax.UpdateLifeBar(-enemyAttackAmount, 0);
+	    // Display attack info
+	    dialogueText.text = fighterInfo.fighterName +  message;
 
-	    yield return new WaitForSeconds(1f);
+	    // Pass damage amount to MinMax algorithm
+	    _minMax.UpdateLifeBar(damage[0], damage[1]);
 
-	    var isDead = playerInfo.TakeDamage(enemyAttackAmount);
-
-	    _playerHUD.SetHP(playerInfo.currentHP);
-
-	    yield return new WaitForSeconds(1f);
-
-	    if(isDead)
+	    // Update HP Sliders
+	    _playerHUD.SetHP(_minMax.GetPlayerLifeBar());
+	    _enemyHUD.SetHP(_minMax.GetOpponentLifeBar());
+	    
+	    yield return new WaitForSeconds(2f);
+	    
+	    // Both fighters have died (TIE)
+	    if (_minMax.GetPlayerLifeBar() == 0 && _minMax.GetOpponentLifeBar() == 0)
+	    {
+		    state = BattleState.Tie;
+		    EndBattle();
+	    }
+	    
+	    // Enemy have died (WON)
+	    else if (_minMax.GetPlayerLifeBar() > 0 && _minMax.GetOpponentLifeBar() == 0)
+	    {
+		    state = BattleState.Won;
+		    EndBattle();
+	    }
+	    
+	    // Player have died (LOST)
+	    else if (_minMax.GetPlayerLifeBar() == 0 && _minMax.GetOpponentLifeBar() > 0)
 	    {
 		    state = BattleState.Lost;
 		    EndBattle();
-	    } 
-	    else
+	    }
+	    
+	    // Fight continues
+	    else if (_minMax.GetPlayerLifeBar() > 0 && _minMax.GetOpponentLifeBar() > 0)
 	    {
-		    state = BattleState.PlayerTurn;
-		    PlayerTurn();
+		    // Pass turn to opponent
+		    if (isPlayer)
+		    {
+			    state = BattleState.EnemyTurn;
+			    EnemyTurn();
+		    }
+		    
+		    // Pass turn to player
+		    else
+		    {
+			    state = BattleState.PlayerTurn;
+			    PlayerTurn();
+		    }
 	    }
     }
 
-    private IEnumerator PlayerHeal()
-	{
-		playerInfo.Heal(playerHealAmount);
-		_minMax.UpdateLifeBar(playerHealAmount, 0);
-
-		_playerHUD.SetHP(playerInfo.currentHP);
-		dialogueText.text = "You feel renewed strength!";
-
-		yield return new WaitForSeconds(2f);
-
-		state = BattleState.EnemyTurn;
-		EnemyTurn();
-	}
-    
-    private IEnumerator EnemyHeal()
-    {
-	    enemyInfo.Heal(enemyHealAmount);
-	    _minMax.UpdateLifeBar(0, enemyHealAmount);
-
-	    _enemyHUD.SetHP(enemyInfo.currentHP);
-	    dialogueText.text = enemyInfo.fighterName + " heals.";
-
-	    yield return new WaitForSeconds(1f);
-	    
-	    state = BattleState.PlayerTurn;
-	    PlayerTurn();
-    }
-
-	public void OnAttackButton()
+	public void OnBiteButton()
 	{
 		if (state != BattleState.PlayerTurn)
 			return;
 
-		StartCoroutine(PlayerAttack());
+		StartCoroutine(Move(playerBiteDamage, playerInfo, true, " bites."));
 	}
 
-	public void OnHealButton()
+	public void OnFireAttackButton()
 	{
 		if (state != BattleState.PlayerTurn)
 			return;
 
-		StartCoroutine(PlayerHeal());
+		StartCoroutine(Move(playerFireAttackDamage, playerInfo, true, " fire attacks."));
 	}
 }

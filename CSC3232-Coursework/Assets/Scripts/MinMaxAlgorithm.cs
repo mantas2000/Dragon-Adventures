@@ -17,10 +17,10 @@ public class MinMaxAlgorithm : MonoBehaviour
     public void Start()
     {
         // The player can perform three different actions:
-        var actionsPlayer = new HashSet<string> {"Attack", "Heal"};
+        var actionsPlayer = new HashSet<string> {"Bite", "Fire Attack"};
 
         // The NPC can also perform 3 damage different actions
-        var actionsNPC = new HashSet<string> {"Attack", "Heal"};
+        var actionsNPC = new HashSet<string> {"Kick", "Magic Spell"};
 
         // Initialization of the minmax algorithm
         cgs = new MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>.CurrentGameState();
@@ -41,18 +41,31 @@ public class MinMaxAlgorithm : MonoBehaviour
                     result.gameConfiguration = conff.gameConfiguration.appendAction(act);
                     result.parentAction = act;
                     // Setting up the actions by performing some damage
-                    if (conff.isPlayerTurn) {
-                        if (act.Equals("Attack"))
-                            result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - bm.playerAttackAmount, 0.0), true);
-                        else if (act.Equals("Heal"))
-                            result.playerLifeBar = new TreeBasedPlayerConf(Math.Min(result.playerLifeBar.getScore() + bm.playerHealAmount, 0.0), true);
+                    if (conff.isPlayerTurn)
+                    {
+                        switch (act)
+                        {
+                            case "Bite":
+                                result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - bm.playerBiteDamage[1], 0.0), true);
+                                break;
+                            case "Fire Attack":
+                                result.playerLifeBar = new TreeBasedPlayerConf(Math.Min(result.playerLifeBar.getScore() + bm.playerFireAttackDamage[0], 0.0), true);
+                                result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - bm.playerFireAttackDamage[1], 0.0), true);
+                                break;
+                        }
                     } 
                     else
                     {
-                        if (act.Equals("Attack"))
-                            result.playerLifeBar = new TreeBasedPlayerConf(Math.Max(result.playerLifeBar.getScore() - bm.enemyAttackAmount, 0.0), true);
-                        else if (act.Equals("Heal"))
-                            result.opponentLifeBar = new TreeBasedPlayerConf(Math.Min(result.opponentLifeBar.getScore() + bm.enemyHealAmount, 0.0), true);
+                        switch (act)
+                        {
+                            case "Kick":
+                                result.playerLifeBar = new TreeBasedPlayerConf(Math.Max(result.playerLifeBar.getScore() - bm.enemyKickDamage[0], 0.0), true);
+                                break;
+                            case "Magic Spell":
+                                result.playerLifeBar = new TreeBasedPlayerConf(Math.Max(result.playerLifeBar.getScore() - bm.enemyMagicSpellDamage[0], 0.0), true);
+                                result.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(result.opponentLifeBar.getScore() - bm.enemyMagicSpellDamage[1], 0.0), true);
+                                break;
+                        }
                     }
                     return result;
                 };
@@ -70,37 +83,30 @@ public class MinMaxAlgorithm : MonoBehaviour
 
     public string BestAction()
     {
+        tree = conf.fitWithAlphaBetaPruning(cgs);
         return tree.data.action.getBestAction();
     }
     
     public void UpdateLifeBar(int playerHp, int opponentHp)
     {
-        // Increase health for player
-        if (playerHp > 0)
-        {
-            cgs.playerLifeBar = new TreeBasedPlayerConf(Math.Min(cgs.playerLifeBar.getScore() + playerHp, playerInfo.maxHP), true);
-        }
-        
         // Decrease health for player
-        else if (playerHp < 0)
-        {
-            cgs.playerLifeBar = new TreeBasedPlayerConf(Math.Max(cgs.playerLifeBar.getScore() + playerHp, 0), true);
-        }
-        
-        // Increase health for opponent
-        if (opponentHp > 0)
-        {
-            cgs.opponentLifeBar = new TreeBasedPlayerConf(Math.Min(cgs.opponentLifeBar.getScore() + opponentHp, opponentInfo.maxHP), true);
-        }
-        
+        cgs.playerLifeBar = new TreeBasedPlayerConf(Math.Max(cgs.playerLifeBar.getScore() - playerHp, 0), true);
+
         // Decrease health for opponent
-        else if (opponentHp < 0)
-        {
-            cgs.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(cgs.opponentLifeBar.getScore() + opponentHp, 0), true);
-        }
-        
+        cgs.opponentLifeBar = new TreeBasedPlayerConf(Math.Max(cgs.opponentLifeBar.getScore() - opponentHp, 0), true);
+
         Debug.Log("PLAYER HEALTH: " + cgs.playerLifeBar.getScore());
         Debug.Log("ENEMY HEALTH: " + cgs.opponentLifeBar.getScore());
         Debug.Log("-----------------------------------");
+    }
+
+    public int GetPlayerLifeBar()
+    {
+        return (int) cgs.playerLifeBar.getScore();
+    }
+    
+    public int GetOpponentLifeBar()
+    {
+        return (int) cgs.opponentLifeBar.getScore();
     }
 }

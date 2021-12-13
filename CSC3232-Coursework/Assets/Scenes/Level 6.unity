@@ -826,7 +826,7 @@ Transform:
   m_Children:
   - {fileID: 109741675}
   m_Father: {fileID: 1190092491}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &580914697
 SpriteRenderer:
@@ -1049,11 +1049,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639847119}
   m_CullTransparentMesh: 0
---- !u!4 &649841996 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-  m_PrefabInstance: {fileID: 1642195365}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &834394669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,7 +1335,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 3.8999996}
+  m_AnchoredPosition: {x: 0, y: 3.9000015}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &930052321
@@ -1363,9 +1358,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Attack
-
-'
+  m_text: BITE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f9c4b7ca6488b341882e8693aff1b76, type: 2}
   m_sharedMaterial: {fileID: 7514990378510377523, guid: 0f9c4b7ca6488b341882e8693aff1b76, type: 2}
@@ -1392,8 +1385,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1455,7 +1448,7 @@ GameObject:
   - component: {fileID: 959006072}
   - component: {fileID: 959006071}
   m_Layer: 5
-  m_Name: Heal Button
+  m_Name: Fire Attack Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1478,8 +1471,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 181, y: 1.699999}
-  m_SizeDelta: {x: 250, y: 70}
+  m_AnchoredPosition: {x: 345.81, y: 1.699999}
+  m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &959006071
 MonoBehaviour:
@@ -1527,7 +1520,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1509439000}
         m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: OnHealButton
+        m_MethodName: OnFireAttackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1624,7 +1617,7 @@ GameObject:
   - component: {fileID: 975645857}
   - component: {fileID: 975645856}
   m_Layer: 5
-  m_Name: Attack Button
+  m_Name: Bite Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1647,8 +1640,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -80, y: 1.6999986}
-  m_SizeDelta: {x: 250, y: 70}
+  m_AnchoredPosition: {x: 27.5, y: 1.6999986}
+  m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &975645856
 MonoBehaviour:
@@ -1696,7 +1689,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1509439000}
         m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: OnAttackButton
+        m_MethodName: OnBiteButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1835,7 +1828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 3.8999996}
+  m_AnchoredPosition: {x: 0, y: 3.9000015}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1023604514
@@ -1858,9 +1851,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Heal
-
-'
+  m_text: FIRE ATTACK
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f9c4b7ca6488b341882e8693aff1b76, type: 2}
   m_sharedMaterial: {fileID: 7514990378510377523, guid: 0f9c4b7ca6488b341882e8693aff1b76, type: 2}
@@ -1887,8 +1878,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2040,7 +2031,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 238737279}
-  - {fileID: 649841996}
   - {fileID: 1760778676}
   - {fileID: 580914696}
   - {fileID: 1998475260}
@@ -2082,8 +2072,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -567, y: 5}
-  m_SizeDelta: {x: 369.79, y: 100}
+  m_AnchoredPosition: {x: -530.19, y: 5}
+  m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1273656700
 MonoBehaviour:
@@ -2132,8 +2122,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2471,7 +2461,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1190092491}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1509439000
 MonoBehaviour:
@@ -2491,10 +2481,10 @@ MonoBehaviour:
   _playerHUD: {fileID: 639847121}
   _enemyHUD: {fileID: 141156109}
   _minMax: {fileID: 1760778677}
-  playerAttackAmount: 3
-  playerHealAmount: 2
-  enemyAttackAmount: 2
-  enemyHealAmount: 5
+  playerBiteDamage: 0000000002000000
+  playerFireAttackDamage: 0100000004000000
+  enemyKickDamage: 0300000000000000
+  enemyMagicSpellDamage: 0500000002000000
   state: 0
 --- !u!1 &1530575697
 GameObject:
@@ -2820,75 +2810,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1570120430}
   m_CullTransparentMesh: 0
---- !u!1001 &1642195365
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1190092491}
-    m_Modifications:
-    - target: {fileID: 181518922956832403, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832403, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.56
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 67.749916
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832406, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 181518922956832412, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: scoreSystem
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 966821807007445465, guid: ce10016ddfa64724f911737ded84705e, type: 3}
-      propertyPath: ShapeModule.m_Scale.x
-      value: 1.75
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ce10016ddfa64724f911737ded84705e, type: 3}
 --- !u!1 &1660812740
 GameObject:
   m_ObjectHideFlags: 0
@@ -3293,7 +3214,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1190092491}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1760778677
 MonoBehaviour:
@@ -3439,7 +3360,7 @@ Transform:
   m_Children:
   - {fileID: 1924487415}
   m_Father: {fileID: 1190092491}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1998475261
 SpriteRenderer:
