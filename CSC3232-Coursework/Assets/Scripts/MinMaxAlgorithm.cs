@@ -27,8 +27,8 @@ public class MinMaxAlgorithm : MonoBehaviour
         // Setting some parameters out of the constructor, so to provide a better comment section...
         var initConf = new TreeBasedGameConfiguration<string>(); // initial state of the tree game
         cgs.gameConfiguration = initConf;                // initial board configuration
-        cgs.opponentLifeBar = new TreeBasedPlayerConf(playerInfo.currentHP, true); // normalized life bar
-        cgs.playerLifeBar = new TreeBasedPlayerConf(opponentInfo.currentHP, true);   // normalized life bar
+        cgs.opponentLifeBar = new TreeBasedPlayerConf(opponentInfo.currentHP, true); // normalized life bar
+        cgs.playerLifeBar = new TreeBasedPlayerConf(playerInfo.currentHP, true);   // normalized life bar
         cgs.isPlayerTurn = false;                        // starting with max
         cgs.parentAction = "";                           // the root node has NO parent action, represented as an empty string!
 
