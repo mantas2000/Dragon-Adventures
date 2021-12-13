@@ -73,17 +73,16 @@ public class MinMaxAlgorithm : MonoBehaviour
                 conf = new MinMax<string, TreeBasedGameConfiguration<string>, TreeBasedPlayerConf>(actionsNPC, actionsPlayer, f);
                 
                 // Running the whole MinMax algorithm with alpha/beta pruning
-                //Debug.Log("Tree with Min/Max approach and Alpha/Beta Pruning:");
-                //var truncTree = conf.fitWithAlphaBetaPruning(cgs);
-                //Log(truncTree, (x) => x.ToString());
-                //Debug.Log(truncTree.data.action.getBestAction());
                 tree = conf.fitWithAlphaBetaPruning(cgs);
         }
     }
 
     public string BestAction()
     {
+        // Running the whole MinMax algorithm with alpha/beta pruning
         tree = conf.fitWithAlphaBetaPruning(cgs);
+        
+        // Return best possible action
         return tree.data.action.getBestAction();
     }
     
@@ -102,11 +101,13 @@ public class MinMaxAlgorithm : MonoBehaviour
 
     public int GetPlayerLifeBar()
     {
+        // Get player's current HP
         return (int) cgs.playerLifeBar.getScore();
     }
     
     public int GetOpponentLifeBar()
     {
+        // Get opponent's current HP
         return (int) cgs.opponentLifeBar.getScore();
     }
 }
