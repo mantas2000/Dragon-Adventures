@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum BattleState {Start, PlayerTurn, EnemyTurn, Won, Lost, Tie}
 
@@ -24,6 +26,20 @@ public class BattleManager : MonoBehaviour
     {
 		state = BattleState.Start;
 		StartCoroutine(SetupBattle());
+    }
+
+    private void Update()
+    {
+	    // Restart level
+	    if (Input.GetKeyDown(KeyCode.R)){
+		    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	    }
+        
+	    // Exit level
+	    if (Input.GetKeyDown(KeyCode.Escape))
+	    {
+		    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex != 1 ? "Overworld" : "Menu");
+	    }
     }
 
     private IEnumerator SetupBattle()
