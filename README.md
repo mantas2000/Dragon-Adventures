@@ -1,6 +1,6 @@
 # Dragon Adventures
 <p align="left">
-  <img src="/cover.png" height="400" />
+  <img src="/cover.png" width="60%" />
 </p>
 
 ## Ownership
